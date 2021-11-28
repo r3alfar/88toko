@@ -1,0 +1,150 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>profile</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- <ion-buttons>
+    <ion-button color="primary">{{profile.isadmin}}</ion-button>
+    <ion-button color="secondary">Secondary</ion-button>
+    <ion-button color="tertiary">Tertiary</ion-button>
+    <ion-button>
+      <ion-icon slot="start" name="star"></ion-icon>
+      Left Icon
+    </ion-button>
+  </ion-buttons>
+
+  <div *ngIf="profile.name == 'farrelzz'">
+    <ion-button color="success">Success</ion-button>
+    <ion-button color="warning">Warning</ion-button>
+    <ion-button color="danger">Danger</ion-button>
+    <p></p>
+  </div> -->
+
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12" size-sm="8" offset-sm="2">
+        <div *ngIf="profile">
+          <div style="display: flex; justify-content: center; padding: 2rem 1rem 1rem 1rem;">
+            <div style="position: relative; width: 175px; height: 175px;">
+              <!-- <ion-fab-button size="small" color="primary" style="position: absolute; bottom: 0; right: 0;"
+                >
+                (click)="getPicture()"
+                <ion-icon name="camera"></ion-icon>
+              </ion-fab-button> -->
+              <!-- <ion-img *ngIf="!dataPengguna.photo" src="assets/images/user.svg" class="circle-image" alt=""></ion-img> -->
+              <ion-img *ngIf="!profile.imageUrl" src="assets/icon/undraw_male.svg" class="circle-image"></ion-img>
+              <ion-img *ngIf="profile.imageUrl" [src]="profile.imageUrl" class="circle-image"></ion-img>
+            </div>
+          </div>
+          <div style="display: flex; flex-flow: column wrap; justify-content: center; align-items: center;">
+            <div class="input-container">
+              <h5 style="margin: 0.5rem 1rem;">
+                {{ profile.name }}
+              </h5>
+            </div>
+            <ion-note style="margin-top: 0.5rem;">{{ profile.email }}</ion-note>
+          </div>
+          <hr>
+          <!-- Data Profile -->
+          <div *ngIf="!isEdit" class="ion-margin ion-padding input-container">
+            <h5 style="margin-left: 1rem;">Data Profile
+              <ion-icon slot="icon-only" name="information-circle"></ion-icon>
+            </h5>
+            <ion-list lines="full" style="--background-color: var(--ion-color-light)">
+              <ion-item>
+                <ion-label position="fixed">Full Name</ion-label>
+                <ion-text>{{ profile.name }}</ion-text>
+              </ion-item>
+              <ion-item>
+                <ion-label position="fixed">Alamat</ion-label>
+                <ion-text>{{ profile.alamat ? profile.alamat : '-'}}</ion-text>
+              </ion-item>
+              <ion-item *ngIf="profile.isadmin === 'admin'">
+                <ion-label position="fixed" >isAdmin?</ion-label>
+                <ion-text>{{ profile.isadmin }}</ion-text>
+              </ion-item>
+            </ion-list>
+          </div>
+          <!-- Edit Profile -->
+          <!-- <div *ngIf="isEdit" class="ion-margin ion-padding input-container">
+            <h5 style="margin-left: 1rem;">Edit Profile</h5>
+            <form [formGroup]="profileForm" (ngSubmit)="editProfile(profileForm.value)">
+              <ion-list lines="full" class="ion-margin-bottom" style="--background-color: var(--ion-color-light)">
+
+                <ion-item>
+                  <ion-label position="fixed">Full Name</ion-label>
+                  <ion-input formControlName="name" placeholder="Full Name"
+                    value="{{ dataPengguna.name ? dataPengguna.name : ''}}"></ion-input>
+                </ion-item>
+                <ng-container *ngFor="let validation of validationMessages.name">
+                  <div class="error-message" *ngIf="
+                profileForm.get('name').hasError(validation.type) &&
+                (profileForm.get('name').dirty || profileForm.get('name').touched)
+              ">
+                    <ion-label color="danger" style="font-size: small"> {{validation.message}}</ion-label>
+                  </div>
+                </ng-container>
+
+                <ion-item>
+                  <ion-label position="fixed">Phone</ion-label>
+                  <ion-input formControlName="phone" placeholder="Phone"
+                    value="{{ dataPengguna.phone ? dataPengguna.phone : ''}}"></ion-input>
+                </ion-item>
+                <ng-container *ngFor="let validation of validationMessages.phone">
+                  <div class="error-message" *ngIf="
+                profileForm.get('phone').hasError(validation.type) &&
+                (profileForm.get('phone').dirty || profileForm.get('phone').touched)
+              ">
+                    <ion-label color="danger" style="font-size: small"> {{validation.message}}</ion-label>
+                  </div>
+                </ng-container>
+
+                <ion-item>
+                  <ion-label position="fixed">Birth Date</ion-label>
+                  <ion-datetime formControlName="birthDate" placeholder="Birth Date"
+                    value="{{ dataPengguna.birthDate ? dataPengguna.birthDate : ''}}" displayFormat="DD MMMM YYYY">
+                  </ion-datetime>
+                </ion-item>
+                <ng-container *ngFor="let validation of validationMessages.birthDate">
+                  <div class="error-message" *ngIf="
+                profileForm.get('birthDate').hasError(validation.type) &&
+                (profileForm.get('birthDate').dirty || profileForm.get('birthDate').touched)
+              ">
+                    <ion-label color="danger" style="font-size: small"> {{validation.message}}</ion-label>
+                  </div>
+                </ng-container>
+
+                <ion-item>
+                  <ion-label position="fixed">Gender</ion-label>
+                  <ion-select formControlName="gender" placeholder="Gender"
+                    value="{{ dataPengguna.gender ? dataPengguna.gender : ''}}">
+                    <ion-select-option value="Female">Female</ion-select-option>
+                    <ion-select-option value="Male">Male</ion-select-option>
+                  </ion-select>
+                </ion-item>
+                <ng-container *ngFor="let validation of validationMessages.gender">
+                  <div class="error-message" *ngIf="
+                profileForm.get('gender').hasError(validation.type) &&
+                (profileForm.get('gender').dirty || profileForm.get('gender').touched)
+              ">
+                    <ion-label color="danger" style="font-size: small"> {{validation.message}}</ion-label>
+                  </div>
+                </ng-container>
+
+              </ion-list>
+              <ion-button type="submit" shape="round" expand="block" color="success" [disabled]="!profileForm.valid">
+                Save</ion-button>
+            </form>
+          </div> -->
+
+          <div class="ion-padding">
+            <ion-button shape="round" expand="block" color="danger" (click)="onLogout()">Keluar</ion-button>
+          </div>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>

@@ -1,0 +1,51 @@
+<ion-content>
+  <ion-grid style="padding-top: 2rem;">
+    <ion-row>
+      <ion-col size="12" size-sm="8" offset-sm="2">
+        <!-- Frontpage assets  -->
+          <!-- <div class="ion-text-center ion-padding-top" style="width: 100%;"><img class="" src="../../../assets/nature.svg" alt="icon" style="max-height: 150px; max-width: 150px;"/></div> -->
+
+        <ion-title style="font-size: 30px; text-align: center; font-weight: 600; opacity: 0.5; margin-top: 5px;">deltaEight</ion-title>
+
+      <!-- SignIn Form -->
+        <form style="padding: 30px 60px 60px 60px;" #form="ngForm" (ngSubmit)="onSubmit(form)">
+          <ion-text style="margin: 0;">
+            <h2 style="font-weight: 600;">Sign In</h2>
+          </ion-text>
+
+          <ion-text style="color: #9d9fa6; font-size: 12px; margin-top: inherit;">
+            <p>Welcome to deltaEight App.</p>
+          </ion-text>
+
+          <!-- Email -->
+          <ion-item>
+            <ion-label position="floating" color="medium">Email</ion-label>
+            <ion-input type="email" ngModel name="email" required email #emailCtrl="ngModel"></ion-input>
+          </ion-item>
+            <ion-item *ngIf="!emailCtrl.valid && emailCtrl.touched">
+              <ion-icon color="danger" name="alert-circle-outline"></ion-icon>
+              <ion-label color="danger" style="font-size: small;">Should be a valid email address.</ion-label>
+            </ion-item>
+
+          <!-- Password -->
+          <ion-item>
+            <ion-label position="floating" color="medium">Password</ion-label>
+            <ion-input type="password" ngModel name="password" required minlength="6" #passCtrl="ngModel"></ion-input>
+          </ion-item>
+            <ion-item *ngIf="!passCtrl.valid && passCtrl.touched">
+              <ion-icon color="danger" name="alert-circle-outline"></ion-icon>
+              <ion-label color="danger" style="font-size: small;">Password must be six.</ion-label>
+            </ion-item>
+
+          <!-- SUBMIT -->
+          <ion-button style="margin-top: 50px;" type="submit" color="success" expand="block" [disabled]="!form.valid">Sign In</ion-button>
+            <ion-title color="medium" size="small" style="font-size: 11px; text-align: center; padding-top: 20px">Don't have an account?
+            <ion-label routerLink="/b-signup" color="success" style="font-size: 12px">Create Account</ion-label> </ion-title>
+
+
+        </form>
+
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

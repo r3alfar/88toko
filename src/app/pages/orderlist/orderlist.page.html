@@ -1,0 +1,121 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Transaction History</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    
+      <!-- EMPTY CART text -->
+      <!-- <div class="empty-orders" *ngIf="!orderList.length">
+        <ion-icon name="newspaper"></ion-icon>
+        <p>Your Transaction History is Empty!</p>
+      </div>     -->
+
+      <ion-card *ngFor="let orderan of orderList" (click)="openModal(orderan)" style="margin-left: 2rem; margin-right: 2rem;;margin-top: 1rem;">
+        <div *ngFor="let firstItem of orderan.productsOrdered | keyvalue; let first=first">
+          <div *ngIf="first">
+            <ion-row class="header-title">
+              <ion-col class="title-icon" size="2" center text-center>
+                <ion-icon class="iconBelanja" name="cart"></ion-icon>
+              </ion-col>
+              <ion-col size="6" left text-left>
+                <ion-text class="title-belanja">Belanja</ion-text>
+                <div class="title-tgl">{{getTanggal(orderan.timeOrdered)}}</div>
+              </ion-col>
+              <ion-col size="4" center text-center>
+      
+                <div *ngIf="!orderan.isAccepted && !orderan.isCompleted " style="background: #FA4A44;" class="custom-filled-text">
+                  <p center text-center>Pending</p>
+                </div>
+                <div *ngIf="orderan.isAccepted && !orderan.isCompleted " style="background: #F6DE0F;" class="custom-filled-text">
+                  <p center text-center>Diproses</p>
+                </div>
+                <!-- <ion-button class="btn-selesai" *ngIf="orderan.isAccepted && orderan.isCompleted " [disabled]="true">
+                  Selesai
+                </ion-button> -->
+                <div *ngIf="orderan.isAccepted && orderan.isCompleted " style="background: #0FA958;" class="custom-filled-text">
+                  <p center text-center>Selesai</p>
+                </div>
+              
+              </ion-col>
+            </ion-row>
+    
+            <ion-item>
+              <div class="detBarang">
+                <div class="pic-first">
+                  <ion-avatar>
+                    <img src="{{findItem(firstItem.key).thumb}}" />
+                  </ion-avatar>
+                    <div class="firstProd">
+                      <h5 class="ion-no-margin">{{findItem(firstItem.key).nama}}</h5>
+                      <ion-text>Qty: {{(firstItem.value)}}</ion-text>
+                    </div>
+                </div>
+                <ion-text *ngIf="orderan.orderLength - 1 >0"> +{{(orderan.orderLength)-1}} Barang lainnya</ion-text>
+              </div>
+            </ion-item>
+    
+            <ion-footer>
+              <ion-row>
+                <ion-col size="4" top text-left>
+                  <div class="jumlahTotal">Jumlah Total</div>
+                </ion-col>
+                <ion-col size="8" center text-center>
+                  <div class="harga">Rp. {{orderan.totalPrice | number:'1.0'}}</div>
+                </ion-col>
+              </ion-row>
+            </ion-footer>
+          </div>
+        </div>
+        
+      </ion-card>
+
+      <!-- <ion-card *ngFor="let orderan of orderList" (click)="openModal(orderan)">
+        <ion-list *ngFor="let firstItem of orderan.productsOrdered | keyvalue; let first=first">
+          <div class="ignore-div" *ngIf="first">
+            
+            <ion-item>
+              <div class="orHeader">
+                <ion-icon  name="cart"></ion-icon>
+                <div class="midHeader">
+                  <h3 class="ion-no-margin">Belanja</h3>
+                  <ion-text>{{getTanggal(orderan.timeOrdered)}}</ion-text>
+                </div>
+                <app-badge text="Diproses"></app-badge>
+              </div>
+            </ion-item>
+            <ion-item>
+              <div class="detBarang">
+                <div class="pic-first">
+                  <ion-avatar>
+                    <img src="{{findItem(firstItem.key).thumb}}" />
+                  </ion-avatar>
+                    <div class="firstProd">
+                      <h5 class="ion-no-margin">{{findItem(firstItem.key).nama}}</h5>
+                      <ion-text>Qty: {{(firstItem.value)}}</ion-text>
+                    </div>
+                </div>
+              
+                <ion-text *ngIf="orderan.orderLength - 1 >0">+ {{(orderan.orderLength)-1}} Barang lainnya</ion-text>
+              </div>
+              
+              
+            </ion-item>
+            <ion-item>
+              <ion-label>Rp. {{orderan.totalPrice | number:'1.0'}}</ion-label>
+              <ion-buttons>
+                <ion-button fill="solid" color="primary" slot=end>Detail</ion-button>
+              </ion-buttons>
+            </ion-item>
+          </div>
+          
+        </ion-list>
+      </ion-card> -->
+
+      <!-- <h3 *ngIf="orderList.length === 0">Unfortunately you have no transaction yet!</h3> -->
+  
+   
+    <!-- </div> -->
+  </ion-content>
+

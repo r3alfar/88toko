@@ -1,0 +1,56 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>fav</ion-title>
+    <ion-buttons slot="start">
+      <ion-button routerLink="/tabs/home">
+        <ion-icon slot="icon-only" color="dark" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <!-- <div *ngFor="let favItem of favList">
+    <p>{{favItem.favitemId}}</p>
+  </div> -->
+
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12" size-sm="8" offset-sm="2">
+        <ion-list *ngIf="favList" lines="none" class="ion-padding">
+          <ion-item-sliding class="apartemen-item" *ngFor="let favItem of favList "
+            [routerLink]="['/','tabs','detail', favItem.favitemId]">
+            <ion-item class="ion-no-padding" style="border-radius: 0.75rem;">
+              <div>
+                <ion-img class="img" src="{{findItem(favItem.favitemId).thumb }}"></ion-img>
+              </div>
+              <div class="detail-container">
+                <h5 class="ion-no-margin">{{ findItem(favItem.favitemId).nama }}</h5>
+                <h6 class="ion-no-margin">{{ findItem(favItem.favitemId).size }}</h6>
+                <h3 class="ion-no-margin"><sup>Rp.</sup>{{ findItem(favItem.favitemId).harga | number: '1.0' }}
+                </h3>
+              </div>
+            </ion-item>
+
+            <ion-item-options side="end">
+              <ion-item-option color="danger" (click)="unfavItem(favItem.key)">
+                <ion-icon slot="icon-only" name="trash"></ion-icon>
+              </ion-item-option>
+            </ion-item-options>
+
+          </ion-item-sliding>
+          <ion-text color="medium" style="font-size: small;">
+            <b>!</b> By sliding items to the left, you can delete favorites.
+          </ion-text>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <div *ngIf="!favList" class="centered ion-text-center">
+    <ion-text>Your Favorite is Empty!</ion-text>
+    <!-- <ion-img src="assets/images/favorite.svg" style="margin-bottom: 1rem; max-width: 10rem; max-height: 10rem;">
+    </ion-img> -->
+  </div>
+
+</ion-content>

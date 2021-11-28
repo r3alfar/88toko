@@ -1,0 +1,160 @@
+// .orHeader {
+//   display: flex;
+//   justify-content: space-between;
+
+//   ion-icon {
+//     align-items: flex-start;
+//     margin-right: 20px;
+//     font-size: 30px;
+//   }
+
+//   .midHeader {
+
+//     display: block;
+
+//     h3 {}
+
+
+//   }
+
+//   app-badge {
+//     align-items: flex-end;
+//   }
+// }
+
+// .detBarang {
+//   display: block;
+// }
+
+// .pic-first {
+//   display: flex;
+// }
+
+// .firstProd {
+//   display: block;
+//   transform: translateY(22%);
+//   margin-left: 1.25rem;
+// }
+
+// .misc {
+//   display: flex;
+// }
+
+// .month {
+//   font-size: 1.6rem;
+//   color: red;
+// }
+
+// .day {
+//   font-size: 1.4rem;
+//   color: black;
+// }
+
+// .alamat {
+//   //padding-top: 8px;
+// }
+
+// .tgl {
+//   padding-top: 6px;
+// }
+
+.pembeliInfo {
+  display: block;
+}
+
+ion-content {
+  --background: #fbf9f8;
+}
+
+.orHeader {
+  display: flex;
+  justify-content: space-between;
+
+  ion-icon {
+    align-items: flex-start;
+    margin-right: 20px;
+    font-size: 30px;
+  }
+
+  .midHeader {
+
+    display: block;
+
+    h3 {}
+
+
+  }
+
+  app-badge {
+    align-items: flex-end;
+  }
+}
+
+.detBarang {
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.pic-first {
+  display: flex;
+  margin-top: 0.7rem;
+  margin-bottom: 0.5rem;
+}
+
+.firstProd {
+  display: block;
+  transform: translateY(22%);
+  margin-left: 1.25rem;
+}
+
+.misc {
+  display: flex;
+}
+
+.iconBelanja {
+  text-align: center;
+  font-size: 30px;
+  align-content: center;
+}
+
+.title-belanja {
+  font-weight: 400;
+  font-size: 18px;
+}
+
+.title-tgl {
+  font-size: 14px;
+}
+
+.jumlahTotal {
+  display: flex;
+  padding-left: 2rem;
+}
+
+.harga {
+  display: flex;
+  justify-content: center;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #ffb800;
+  // margin-right: 2rem;
+}
+
+.header-title {
+  margin-top: 0.5rem;
+}
+
+ion-avatar {
+  max-width: 40%;
+  max-height: 40%;
+}
+
+.title-icon {
+  text-align: center;
+  align-content: center;
+}
+
+ion-card {
+  box-shadow: 0px -1px 5px rgba(0, 0, 0, 0.25);
+  border-radius: 24px;
+}

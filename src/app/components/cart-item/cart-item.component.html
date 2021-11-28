@@ -1,0 +1,24 @@
+<div class="cart-item">
+  <div class="image">
+    <ion-img [src]="item.imageThumb"></ion-img>
+  </div>
+
+  <div class="desc">
+    <h3>{{item.nama}}</h3>
+    <p><sup>Rp.</sup>{{item.harga | number:'1.0'}}</p>
+  </div>
+
+  <div class="actions">
+    <ion-buttons >
+      <ion-button (click)="increase.emit()">
+        <ion-icon slot="icon-only" name="add"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <div class="counter">{{item.qty}}</div>
+    <ion-buttons >
+      <ion-button (click)="decrease.emit()">
+        <ion-icon slot="icon-only" name="remove"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </div>
+</div>

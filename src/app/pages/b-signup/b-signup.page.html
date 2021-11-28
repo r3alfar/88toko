@@ -1,0 +1,106 @@
+<!-- <ion-header> -->
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button routerLink="/a-signin">
+        <ion-icon slot="icon-only" color="dark" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+<!-- </ion-header> -->
+
+<!-- Form Details -->
+  <!-- Template Driven Form
+          Email, username, name, password, confirm password
+  -->
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12" size-sm="8" offset-sm="2">
+      <!-- FORM STYLE -->
+        <form style="margin-top: -50px;
+                    padding: 60px;"
+              #form="ngForm" (ngSubmit)="onSubmit(form)">
+
+          <ion-text style="margin-bottom: 10px;"><h2><b>Create Account</b></h2></ion-text>
+          <ion-text style="color: #9d9fa6; font-size: 12px;"><p>Create yout account by filling in into below.</p></ion-text>
+
+        <!--EMAIL-->
+          <ion-item>
+            <ion-label position="floating" color="medium">Email</ion-label>
+            <ion-input type="email" ngModel name="email" required email #emailCtrl="ngModel"></ion-input>
+          </ion-item>
+                <!--Input Properties -->
+          <ion-item *ngIf="!emailCtrl.valid && emailCtrl.touched">
+            <ion-icon color="danger" name="alert-circle-outline"></ion-icon>
+            <ion-label color="danger" style="font-size: small">Should be a valid email address.</ion-label>
+          </ion-item>
+
+        <!-- USERNAME -->
+          <ion-item>
+            <ion-label position="floating" color="medium">Username</ion-label>
+            <ion-input type="text" ngModel name="username" required minlength="4" #userCtrl="ngModel"></ion-input>
+          </ion-item>
+                <!--Input Properties -->
+          <ion-item *ngIf="!userCtrl.valid && userCtrl.touched">
+            <ion-icon color="danger" name="alert-circle-outline"></ion-icon>
+            <ion-label color="danger" style="font-size: small">Usernmae length must be four or more.</ion-label>
+          </ion-item>
+
+        <!-- NAME -->
+          <ion-item>
+            <ion-label position="floating" color="medium">Name</ion-label>
+            <ion-input type="text" ngModel name="name" required #nameCtrl="ngModel"></ion-input>
+          </ion-item>
+                <!--Input Properties -->
+          <ion-item *ngIf="!nameCtrl.valid && nameCtrl.touched">
+            <ion-icon color="danger" name="alert-circle-outline"></ion-icon>
+            <ion-label color="danger" style="font-size: small">Name must be filled in correctly.</ion-label>
+          </ion-item>
+
+          <!-- ALAMAT -->
+          <ion-item>
+            <ion-label position="floating" color="medium">Alamat (Saribumi)</ion-label>
+            <ion-input placeholder="Jl. " type="text" ngModel name="alamat" required #alamatCtrl="ngModel"></ion-input>
+          </ion-item>
+                <!--Input Properties -->
+          <ion-item *ngIf="!alamatCtrl.valid && alamatCtrl.touched">
+            <ion-icon color="danger" name="alert-circle-outline"></ion-icon>
+            <ion-label color="danger" style="font-size: small">Alamat must be filled.</ion-label>
+          </ion-item>
+
+        <!-- PASSWORD -->
+          <ion-item>
+            <ion-label position="floating" color="medium">Password</ion-label>
+            <ion-input type="password" ngModel name="password" required minlength="6" #passCtrl="ngModel"></ion-input>
+          </ion-item>
+                <!--Input Properties -->
+          <ion-item *ngIf="!passCtrl.valid && passCtrl.touched">
+            <ion-icon color="danger" name="alert-circle-outline"></ion-icon>
+            <ion-label color="danger" style="font-size: small">Password at least six characters.</ion-label>
+          </ion-item>
+
+        <!-- CONFIRM PASSWORD -->
+          <ion-item>
+            <ion-label position="floating" color="medium">Confirm Password</ion-label>
+            <ion-input type="password" ngModel name="confirmPass" required minlength="6" #confirmpassCtrl="ngModel"></ion-input>
+          </ion-item>
+                <!--Input Properties -->
+          <ion-item *ngIf="!confirmpassCtrl.valid && confirmpassCtrl.touched || confirmpassCtrl.value !== passCtrl.value">
+            <ion-icon color="danger" name="alert-circle-outline"></ion-icon>
+            <ion-label color="danger" style="font-size: small">Password doesn't match.</ion-label>
+          </ion-item>
+          <ion-item *ngIf="!confirmpassCtrl.valid && confirmpassCtrl.touched || confirmpassCtrl.value !== passCtrl.value">
+            <ion-icon color="danger" name="alert-circle-outline"></ion-icon>
+            <ion-label color="danger" style="font-size: small">Confirm Password doesn't match.</ion-label>
+          </ion-item>
+
+      <!-- SUBMIT CONROLLER -->
+          <ion-button style="margin-top: 50px;" type="submit" color="success" expand="block" [disabled]="!form.valid || confirmpassCtrl.value !== passCtrl.value">Create Account</ion-button>
+          <ion-title color="medium" size="small" style="font-size: 11px; text-align: center; padding-top: 20px">Have an account?
+            <ion-label routerLink="/a-signin" color="success" style="font-size: 12px">Sign In</ion-label> </ion-title>
+        </form>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

@@ -1,0 +1,158 @@
+ion-content {
+  // --padding-start: 2rem;
+  // --padding-end: 2rem;
+  --background: #FBF9F8;
+
+  .header {
+    margin-left: 2rem;
+    margin-right: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    margin-top: 3rem;
+    position: sticky;
+    z-index: 2;
+
+    .header-title {
+      margin: 0px;
+      padding: 0px;
+
+      h6 {
+        margin-bottom: 0;
+        font-size: 0.75rem;
+      }
+
+      h2 {
+        font-family: Rajdhani-SemiBold;
+        font-weight: normal;
+        margin-top: 0;
+      }
+
+    }
+
+    .avatar {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      overflow: hidden;
+    }
+  }
+
+  ion-searchbar {
+    // --box-shadow: none;
+    --background: #f3f3f3;
+    --border-radius: 10px;
+    --placeholder-font-weight: 600;
+    --placeholder-opacity: 0.2;
+    --box-shadow: 0px -1px 5px rgba(0, 0, 0, 0.25);
+    padding: 0;
+  }
+
+  .sticky-searchbar {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background: #fff;
+    box-shadow: 0px 9px 11px -16px rgba(0, 0, 0, 0.75);
+  }
+
+  .categories {
+    display: grid;
+    //height: 250px;
+    grid-template-columns: repeat(3, 1fr);
+    //grid-template-columns: repeat(3, minmax(min(100px, 500%), 1fr));
+    grid-gap: 10px;
+  }
+
+  .list-header {
+    font-weight: normal;
+    color: #515151;
+    font-size: 1.8rem;
+    margin-bottom: 1.6rem;
+    margin-top: 0rem;
+  }
+
+  .product-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 1rem;
+    background: #f6f3f3;
+    padding-top: 2rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+
+    .card {
+      width: 100%;
+      padding: 1.6rem 2rem;
+      background: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      border-radius: 24px;
+      margin-bottom: 1.5rem;
+      box-shadow: 0px -1px 5px rgba(0, 0, 0, 0.25);
+
+      ion-img {
+        height: 100px;
+      }
+
+      .card-content {
+        text-align: center;
+
+        .title {
+          font-weight: 700;
+          font-size: 1.1rem;
+          margin-bottom: 0.2rem;
+          color: #1d1d1d;
+          height: 63px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          max-width: 20ch;
+        }
+
+        .subtitle {
+          font-size: 1.3rem;
+          font-weight: 700;
+          color: #ffb800;
+          margin-top: 0;
+
+          sup {
+            font-size: 1rem;
+            margin-right: 2px;
+          }
+        }
+
+        ion-buttons {
+          position: absolute;
+          bottom: -1rem;
+          left: 50%;
+          transform: translateX(-50%);
+          z-index: 1;
+
+          ion-button {
+            --background: #F24E1E;
+            font-weight: 700;
+            color: #fff;
+            width: 40px;
+            height: 40px;
+
+            --padding-start: 0;
+            --padding-end: 0;
+            --padding-top: 0;
+            --padding-bottom: 0;
+          }
+        }
+      }
+    }
+
+  }
+
+
+
+
+}
