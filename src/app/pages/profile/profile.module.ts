@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { ProfilePageRoutingModule } from './profile-routing.module';
 
 import { ProfilePage } from './profile.page';
+import { AdditemModalComponent } from 'src/app/components/additem-modal/additem-modal.component';
 
 @NgModule({
   imports: [
@@ -15,6 +16,7 @@ import { ProfilePage } from './profile.page';
     IonicModule,
     ProfilePageRoutingModule
   ],
-  declarations: [ProfilePage]
+  declarations: [ProfilePage, AdditemModalComponent],
+  entryComponents: [AdditemModalComponent]
 })
-export class ProfilePageModule {}
+export class ProfilePageModule { }

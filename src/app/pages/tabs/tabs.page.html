@@ -6,9 +6,15 @@
     </ion-tab-button>
 
     <ion-tab-button tab="cart">
+      <!-- *ngIf="(profile && !profile.isadmin) || !profile" -->
       <ion-icon [name]="selectedTab == 'cart' ? 'cart' : 'cart-outline'"></ion-icon>
       <ion-label>Cart</ion-label>
     </ion-tab-button>
+
+    <!-- <ion-tab-button tab="tambahproduk" *ngIf="profile && profile.isadmin">
+      <ion-icon [name]="selectedTab == 'tambahproduk' ? 'add-circle' : 'add-circle-outline'"></ion-icon>
+      <ion-label>Add Item</ion-label>
+    </ion-tab-button> -->
 
     <ion-tab-button tab="orderlist">
       <ion-icon [name]="selectedTab == 'orderlist' ? 'newspaper' : 'newspaper-outline'"></ion-icon>

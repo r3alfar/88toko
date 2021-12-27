@@ -7,10 +7,19 @@
 <ion-content>
     
       <!-- EMPTY CART text -->
-      <!-- <div class="empty-orders" *ngIf="!orderList.length">
+      <div class="empty-orders" *ngIf="!orderList && profile">
         <ion-icon name="newspaper"></ion-icon>
-        <p>Your Transaction History is Empty!</p>
-      </div>     -->
+        <h3>Your Transaction History is Empty!</h3>
+      </div> 
+      
+      <div class="empty-orders" *ngIf="!orderList && !profile">
+        <ion-icon name="newspaper"></ion-icon>
+        <h3>Your Transaction History is Empty!</h3>
+        <p>Please Login to use this feature!</p>
+        <ion-button [routerLink]="['/a-signin']" shape="round" expand="block" color="secondary">
+          Login
+        </ion-button>
+      </div>  
 
       <ion-card *ngFor="let orderan of orderList" (click)="openModal(orderan)" style="margin-left: 2rem; margin-right: 2rem;;margin-top: 1rem;">
         <div *ngFor="let firstItem of orderan.productsOrdered | keyvalue; let first=first">

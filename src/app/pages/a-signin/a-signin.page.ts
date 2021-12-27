@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/authentication/auth.service';
 import { ComponentService } from 'src/app/services/component.service';
 import firebase from 'firebase/app';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-a-signin',
@@ -16,6 +17,7 @@ export class ASigninPage implements OnInit {
     private authService: AuthService,
     private compService: ComponentService,
     private router: Router,
+    private navCtrl: NavController
   ) { }
 
   ngOnInit() {
@@ -30,7 +32,8 @@ export class ASigninPage implements OnInit {
       const userCredential: firebase.auth.UserCredential
         = await this.authService.signIn(email, password);
       await this.compService.hideLoading();
-      await this.router.navigateByUrl('/tabs/home');
+      //await this.router.navigate(['/', 'tabs']);
+      await this.navCtrl.navigateRoot('tabs/home');
     }
     catch (error) {
       await this.compService.hideLoading();

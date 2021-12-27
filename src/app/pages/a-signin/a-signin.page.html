@@ -1,3 +1,11 @@
+<ion-toolbar>
+  <ion-buttons slot="start">
+    <ion-button routerLink="..">
+      <ion-icon slot="icon-only" color="dark" name="arrow-back"></ion-icon>
+    </ion-button>
+  </ion-buttons>
+</ion-toolbar>
+
 <ion-content>
   <ion-grid style="padding-top: 2rem;">
     <ion-row>
@@ -5,7 +13,8 @@
         <!-- Frontpage assets  -->
           <!-- <div class="ion-text-center ion-padding-top" style="width: 100%;"><img class="" src="../../../assets/nature.svg" alt="icon" style="max-height: 150px; max-width: 150px;"/></div> -->
 
-        <ion-title style="font-size: 30px; text-align: center; font-weight: 600; opacity: 0.5; margin-top: 5px;">deltaEight</ion-title>
+        <!-- <ion-title style="font-size: 30px; text-align: center; font-weight: 600; opacity: 0.5; margin-top: 5px;">deltaEight</ion-title> -->
+        <ion-img class="logoApp" src="assets/icon/logo/logotokoapp.png"></ion-img>
 
       <!-- SignIn Form -->
         <form style="padding: 30px 60px 60px 60px;" #form="ngForm" (ngSubmit)="onSubmit(form)">
@@ -14,7 +23,7 @@
           </ion-text>
 
           <ion-text style="color: #9d9fa6; font-size: 12px; margin-top: inherit;">
-            <p>Welcome to deltaEight App.</p>
+            <p>Selamat datang di aplikai deltoo.mart!</p>
           </ion-text>
 
           <!-- Email -->

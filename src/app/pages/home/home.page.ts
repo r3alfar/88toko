@@ -10,6 +10,8 @@ import { NavigationExtras, Router } from '@angular/router';
 import { RekomendasiService } from 'src/app/services/rekomendasi.service';
 import { ProfilService } from 'src/app/services/profil.service';
 import { Profile } from 'src/app/models/profile.model';
+import firebase from 'firebase/app';
+import 'firebase/auth';
 
 @Component({
   selector: 'app-home',
@@ -38,19 +40,33 @@ export class HomePage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.loadCategories();
     this.loaduser();
+    this.loadCategories();
+  }
+
+  ionViewWillEnter() {
+    this.isUserLoggedIn();
   }
 
   ionViewDidEnter() {
     this.segmentChanged();
   }
 
+  isUserLoggedIn() {
+    const user = firebase.auth().currentUser;
+    if (user) {
+      console.log("user logged on")
+      this.loaduser();
+    }
+    else {
+      console.log("user not found")
+      //this.profile == null;
+    }
+  }
+
   searchData(ev: any) {
     console.log(ev.target.value);
     this.loadProducts2(ev.target.value.toString());
-
-
   }
 
   segmentChanged(segCatKey?) {
@@ -102,12 +118,31 @@ export class HomePage implements OnInit {
   }
 
   loaduser() {
-    this.profileServ.getProfile(this.authServ.getuid().toString()).valueChanges()
-      .subscribe(data => {
-        this.profile = data;
-        // console.log(this.profile.favorites);
-      });
+    this.authServ.userDetails().subscribe(res => {
+      if (res === null) {
+        this.profile = undefined;
+      }
+      else {
+        this.profileServ.getProfile(this.authServ.getuid().toString()).valueChanges()
+          .subscribe(data => {
+            this.profile = data;
+            // console.log(this.profile.favorites);
+          });
+      }
+    });
+
   }
+
+  // loaduser() {
+  //   return new Promise<void>((resolve) => {
+  //     this.profileServ.getProfile(this.authServ.getuid().toString()).valueChanges()
+  //       .subscribe(data => {
+  //         this.profile = data;
+  //         //console.log(this.profile);
+  //         resolve();
+  //       });
+  //   })
+  // }
 
   // cobaExternalLibrary() {
   //   var sentence =

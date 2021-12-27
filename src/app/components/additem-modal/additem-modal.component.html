@@ -1,0 +1,74 @@
+<ion-toolbar>
+  <ion-title>Add New Item</ion-title>
+  <ion-buttons slot="end">
+    <ion-button (click)="dismissModal()">
+      Close
+    </ion-button>
+  </ion-buttons>
+</ion-toolbar>
+
+<ion-content>
+  <ion-grid fixed>
+    <ion-row>
+      <ion-col size="12" size-sm="8" offset-sm="2">
+        <!-- FORM STYLE -->
+        <form style="margin-top: -50px;
+                    padding: 60px;"
+              #form="ngForm" (ngSubmit)="onSubmit(form)">
+              <!-- (ngSubmit)="onSubmit(form)" -->
+
+          <ion-text style="margin-bottom: 10px;"><h2><b>Tambah Barang</b></h2></ion-text>
+          <ion-text style="color: #9d9fa6; font-size: 12px;"><p>create new item.</p></ion-text>
+
+          <!-- NAMA PRODUK -->
+          <ion-item>
+            <ion-label position="floating" color="medium">Nama Produk</ion-label>
+            <ion-input type="text" ngModel name="nampro" required minlength="4" #namproCtrl="ngModel"></ion-input>
+          </ion-item>
+          <ion-item *ngIf="!namproCtrl.valid && namproCtrl.touched">
+            <ion-icon color="danger" name="alert-circle-outline"></ion-icon>
+            <ion-label color="danger" style="font-size: small">Nama Produk minimal 4 huruf.</ion-label>
+          </ion-item>
+          <!--  -->
+
+          <!-- HARGA PRODUK -->
+          <ion-item>
+            <ion-label position="floating" color="medium">Harga</ion-label>
+            <ion-input type="number" name="hargapro" required ngModel #hargaproCtrl="ngModel"></ion-input>
+          </ion-item>
+          <ion-item *ngIf="!hargaproCtrl.valid && hargaproCtrl.touched">
+            <ion-icon color="danger" name="alert-circle-outline"></ion-icon>
+            <ion-label color="danger" style="font-size: small">Harga Produk wajib diisi tanpa simbol.</ion-label>
+          </ion-item>
+          <!--  -->
+
+          <!-- KATEGORI PRODUK -->
+          <ion-item>
+            <ion-label position="floating" color="medium">Kategori Produk</ion-label>
+            <ion-select interface="popover" name="mainCategory" required (ionChange)="setSubCategory(maincat)" [(ngModel)]="maincat">
+              <ion-select-option [value]="maincat" *ngFor="let maincat of mainCategories">{{maincat.name}}</ion-select-option>
+
+            </ion-select>
+          </ion-item>
+          <!--  -->
+
+          <!-- SUBKATEGORI PRODUK -->
+          <ion-item>
+            <ion-label position="floating" color="medium">Sub-kategori Produk</ion-label>
+            <ion-select interface="popover" required name="subCategory">
+                <ion-select-option *ngFor="let subcat of selectedSubCat">{{subcat.name}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+          
+          <!--  -->
+
+        
+
+          <!-- SUBMIT CONROLLER -->
+          <ion-button style="margin-top: 50px;" type="submit" color="success" expand="block" [disabled]="!form.valid">Tambah Barang</ion-button>
+          
+        </form>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

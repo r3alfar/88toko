@@ -129,7 +129,17 @@ export class RekomendasiService {
             idf: 0
           };
         }
-        else if (keywordTFDF[kata] && kata === carikata) { keywordTFDF[kata].tf++ };
+        else if (keywordTFDF[kata] && kata === carikata) {
+          keywordTFDF[kata].tf++
+        }
+        //jika kata tidak ditemukan sama sekali
+        else if (keywordTFDF[kata] === undefined && kata !== carikata) {
+          keywordTFDF[kata] = {
+            tf: 0,
+            df: 0,
+            idf: 0
+          };
+        }
       }
     }
 
@@ -166,7 +176,15 @@ export class RekomendasiService {
     //idf calculation inverse document frequency (totalDocument/how many document containing term)
     for (let i = 0; i < this.searchQuery.length; i++) {
       var idfWord = this.searchQuery[i];
-      keywordTFDF[idfWord].idf = Math.log10(this.corpuses.length / keywordTFDF[idfWord].df);
+
+      if (keywordTFDF[idfWord].df === 0) {
+        //mencegah pembagian 0
+        keywordTFDF[idfWord].idf = 0;
+      }
+      else {
+        keywordTFDF[idfWord].idf = Math.log10(this.corpuses.length / keywordTFDF[idfWord].df);
+      }
+
     }
 
     console.log(keywordTFDF);

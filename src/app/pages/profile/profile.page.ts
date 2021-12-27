@@ -3,7 +3,8 @@ import { AngularFireDatabase } from '@angular/fire/database';
 import { AuthService } from 'src/app/services/authentication/auth.service';
 import { Profile } from 'src/app/models/profile.model';
 import { ProfilService } from 'src/app/services/profil.service';
-import { NavController } from '@ionic/angular';
+import { ModalController, NavController } from '@ionic/angular';
+import { AdditemModalComponent } from 'src/app/components/additem-modal/additem-modal.component';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.page.html',
@@ -21,7 +22,8 @@ export class ProfilePage implements OnInit {
     private authService: AuthService,
     private db: AngularFireDatabase,
     private profileServ: ProfilService,
-    private navCtrl: NavController
+    private navCtrl: NavController,
+    private modalCtrl: ModalController
   ) { }
 
   async ngOnInit() {
@@ -30,12 +32,20 @@ export class ProfilePage implements OnInit {
 
   loaduser() {
     return new Promise<void>((resolve) => {
-      this.profileServ.getProfile(this.authService.getuid().toString()).valueChanges()
-        .subscribe(data => {
-          this.profile = data;
-          console.log(this.profile);
-          resolve();
-        });
+      this.authService.userDetails().subscribe(res => {
+        if (res === null) {
+          this.profile = undefined;
+        }
+        else {
+          this.profileServ.getProfile(this.authService.getuid().toString()).valueChanges()
+            .subscribe(data => {
+              this.profile = data;
+              console.log(this.profile);
+
+            });
+        }
+      });
+      resolve();
     })
   }
 
@@ -60,10 +70,19 @@ export class ProfilePage implements OnInit {
   onLogout() {
     this.authService.signOut()
       .then(() => {
-        this.navCtrl.navigateRoot('/a-signin');
+        this.navCtrl.navigateRoot('tabs/home');
+        this.profile = undefined;
       }).catch(error => {
         console.log(error);
       });
+  }
+
+  async openModal() {
+    const modal = await this.modalCtrl.create({
+      component: AdditemModalComponent
+    });
+
+    await modal.present();
   }
 
   // getUserData() {

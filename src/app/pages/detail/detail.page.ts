@@ -1,6 +1,6 @@
-import { AfterContentChecked, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterContentChecked, Component, Input, OnInit, Output, ViewChild, EventEmitter } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NavController, ToastController } from '@ionic/angular';
+import { AlertController, NavController, ToastController } from '@ionic/angular';
 import { map } from 'rxjs/operators';
 import { CartItem } from 'src/app/models/cart.model';
 import { Category } from 'src/app/models/category.model';
@@ -15,7 +15,7 @@ import { RekomendasiService } from 'src/app/services/rekomendasi.service';
 
 import { SwiperComponent } from 'swiper/angular';
 import { SwiperOptions } from 'swiper';
-import SwiperCore, {Pagination} from 'swiper/core';
+import SwiperCore, { Pagination } from 'swiper/core';
 
 SwiperCore.use([Pagination]);
 
@@ -24,6 +24,7 @@ const sastrawi = require('sastrawijs');
 var stemmer = new sastrawi.Stemmer();
 var tokenizer = new sastrawi.Tokenizer();
 import * as sw from 'stopword';
+import { BehaviorSubject, Observable } from 'rxjs';
 //natural
 //const tfidff = require('natural/lib/natural/tfidf');
 // import * as natural from 'natural';
@@ -60,10 +61,22 @@ export class DetailPage implements OnInit, AfterContentChecked {
   actualKey: any;
   userID: string;
   //subcat: SubCategory[];
+  totalAmount$: Observable<number>;
 
   slideOpts1 = {
     slidesPerView: 2.5,
   };
+
+  isAddProduct: boolean;
+  jumlahQty: number;
+  newJumlahQty: number;
+  itemInCart: number;
+  selectedItemQty$: Observable<any>;
+  cartItem$: Observable<CartItem[]>;
+
+  @Input() item: CartItem;
+  @Output() increase = new EventEmitter();
+  @Output() decrease = new EventEmitter();
 
   constructor(
     private toastCtrl: ToastController,
@@ -75,7 +88,8 @@ export class DetailPage implements OnInit, AfterContentChecked {
     private categoryService: CategoryService,
     private rekomendasiServ: RekomendasiService,
     private cartService: CartService,
-    private authServ: AuthService
+    private authServ: AuthService,
+    private alertCtrl: AlertController
   ) {
     //this.produkKey = this.activatedRoute.snapshot.paramMap.get('produk.key');
     //Extras State this
@@ -87,7 +101,7 @@ export class DetailPage implements OnInit, AfterContentChecked {
 
   }
 
-  ngAfterContentChecked(){
+  ngAfterContentChecked() {
     if (this.swiperProduct) {
       this.swiperProduct.updateSwiper({});
     }
@@ -98,6 +112,11 @@ export class DetailPage implements OnInit, AfterContentChecked {
 
   ngOnInit() {
     this.loaduser();
+    //this.jumlahQty = 1;
+    this.newJumlahQty = 1;
+    //this.newJumlahQty = this.cartService.getQty();
+    this.itemInCart = this.cartService.getTotalQty();
+    // this.cartItem$ = this.cartService.getCart();
 
     this.activatedRoute.paramMap.subscribe(paramMap => {
       console.log(paramMap);
@@ -122,6 +141,8 @@ export class DetailPage implements OnInit, AfterContentChecked {
     ).subscribe(data => {
       this.catList = data;
     });
+
+
   }
 
   findCategory(catId: string) {
@@ -144,27 +165,131 @@ export class DetailPage implements OnInit, AfterContentChecked {
   }
 
   loaduser() {
-    this.profileServ.getProfile(this.authServ.getuid().toString()).valueChanges()
-      .subscribe(data => {
-        this.profile = data;
-        this.userID = this.profile.key;
-        // console.log(this.profile);
-      });
+    this.authServ.userDetails().subscribe(res => {
+      if (res === null) {
+        this.profile = undefined;
+        this.userID = null;
+      }
+      else {
+        this.profileServ.getProfile(this.authServ.getuid().toString()).valueChanges()
+          .subscribe(data => {
+            this.profile = data;
+            this.userID = this.profile.key;
+            // console.log(this.profile);
+          });
+      }
+      this.isAddProduct = false;
+    });
   }
 
-  addItemToCart() {
+  // addItemToCart() {
+  //   const cartItem: CartItem = {
+  //     key: this.actualKey,
+  //     nama: this.produk.nama,
+  //     harga: parseInt(this.produk.harga),
+  //     imageThumb: this.produk.thumb,
+  //     qty: 1,
+  //   };
+
+  //   this.isAddProduct = true;
+  //   console.log(cartItem);
+  //   this.cartService.addToCart(cartItem);
+  //   this.presentToast();
+  // }
+
+  // addItemToCart() {
+  //   this.isAddProduct = true;
+  //   this.jumlahQty = 1;
+  // }
+
+  // onIncrease() {
+  //   this.changeQty(1);
+  // }
+
+  // onDecrease() {
+  //   this.changeQty(-1);
+  // }
+
+  // changeQty(quantity: number) {
+  //   this.jumlahQty += quantity;
+  //   if (this.jumlahQty < 1) {
+  //     this.isAddProduct = false;
+  //   }
+  // }
+
+  // addItemsToCart() {
+  //   const cartItem: CartItem = {
+  //     key: this.actualKey,
+  //     nama: this.produk.nama,
+  //     harga: parseInt(this.produk.harga),
+  //     imageThumb: this.produk.thumb,
+  //     qty: this.jumlahQty,
+  //   };
+  //   this.cartService.addToCart(cartItem);
+  //   this.presentToast();
+  // }
+
+  // loadItemInCart(){
+  //   this.cartService.getTotalQty().
+  // }
+
+  newGoToKeranjang() {
+    this.router.navigateByUrl('/tabs/cart');
+  }
+
+  newAddtoCart() {
     const cartItem: CartItem = {
       key: this.actualKey,
       nama: this.produk.nama,
       harga: parseInt(this.produk.harga),
       imageThumb: this.produk.thumb,
-      qty: 1,
+      qty: 1
     };
-
-    console.log(cartItem);
     this.cartService.addToCart(cartItem);
-    this.presentToast();
+    this.itemInCart = this.cartService.getTotalQty();
+    this.isAddProduct = true;
   }
+
+  newOnIncrease(produkId: string) {
+    //this.changeQty(1);
+    this.cartService.changeQty(1, produkId);
+    this.newJumlahQty = this.cartService.getQty(produkId);
+    this.itemInCart = this.cartService.getTotalQty();
+  }
+
+  newOnDecrease(produkId: string) {
+
+    if (this.newJumlahQty === 1) {
+      this.cartService.removeItem(produkId);
+      this.isAddProduct = false;
+    }
+    else {
+      this.cartService.changeQty(-1, produkId);
+      this.newJumlahQty = this.cartService.getQty(produkId);
+    }
+
+    this.itemInCart = this.cartService.getTotalQty();
+    // this.cartService.changeQty(-1, produkId);
+    // this.newJumlahQty = this.cartService.getQty(produkId);
+  }
+
+  async removeFromCart(produkId: string) {
+    const alert = await this.alertCtrl.create({
+      header: 'Remove',
+      message: 'Are you sure want to remove?',
+      buttons: [
+        {
+          text: 'Yes',
+          handler: () => this.cartService.removeItem(produkId)
+        },
+        {
+          text: 'No'
+        }
+      ]
+    });
+    alert.present();
+  }
+
 
   buyNow() {
     const cartItem: CartItem = {
@@ -209,7 +334,8 @@ export class DetailPage implements OnInit, AfterContentChecked {
     const toast = await this.toastCtrl.create({
       message: 'Product added to the cart',
       duration: 1000,
-      position: 'top',
+      position: 'middle',
+      color: 'success'
     });
 
     toast.present();

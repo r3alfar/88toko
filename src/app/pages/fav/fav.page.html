@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>fav</ion-title>
+    <ion-title>Produk Yang Disukai</ion-title>
     <ion-buttons slot="start">
       <ion-button routerLink="/tabs/home">
         <ion-icon slot="icon-only" color="dark" name="arrow-back"></ion-icon>
@@ -20,8 +20,8 @@
       <ion-col size="12" size-sm="8" offset-sm="2">
         <ion-list *ngIf="favList" lines="none" class="ion-padding">
           <ion-item-sliding class="apartemen-item" *ngFor="let favItem of favList "
-            [routerLink]="['/','tabs','detail', favItem.favitemId]">
-            <ion-item class="ion-no-padding" style="border-radius: 0.75rem;">
+            >
+            <ion-item [routerLink]="['/','tabs','detail', favItem.favitemId]" class="ion-no-padding" style="border-radius: 0.75rem;">
               <div>
                 <ion-img class="img" src="{{findItem(favItem.favitemId).thumb }}"></ion-img>
               </div>
@@ -33,6 +33,12 @@
               </div>
             </ion-item>
 
+            <ion-item-options side="start">
+              <ion-item-option color="success" (click)="addItemToCart(favItem.favitemId)">
+                <ion-icon slot="icon-only" name="bag-add"></ion-icon>
+              </ion-item-option>
+            </ion-item-options>
+
             <ion-item-options side="end">
               <ion-item-option color="danger" (click)="unfavItem(favItem.key)">
                 <ion-icon slot="icon-only" name="trash"></ion-icon>
@@ -41,7 +47,8 @@
 
           </ion-item-sliding>
           <ion-text color="medium" style="font-size: small;">
-            <b>!</b> By sliding items to the left, you can delete favorites.
+            <b>!</b>Slide ke kiri untuk menghapus favorit.<br>
+            <b>!</b>Slide ke kanan untuk menambahkan ke keranjang.
           </ion-text>
         </ion-list>
       </ion-col>

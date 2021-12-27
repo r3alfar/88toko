@@ -8,7 +8,7 @@ const redirectLoggedInToTabs = () => redirectLoggedInTo(['tabs']);
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'a-signin',
+    redirectTo: 'tabs',
     pathMatch: 'full',
   },
   {
@@ -24,22 +24,31 @@ const routes: Routes = [
   {
     path: 'tabs',
     loadChildren: () => import('./pages/tabs/tabs.module').then(m => m.TabsPageModule),
-    ...canActivate(redirectUnauthorizedToLogin)
+    //...canActivate(redirectUnauthorizedToLogin)
   },
   {
     path: 'detail',
     loadChildren: () => import('./pages/detail/detail.module').then(m => m.DetailPageModule),
-    ...canActivate(redirectUnauthorizedToLogin)
+    //...canActivate(redirectUnauthorizedToLogin)
   },
   {
     path: 'orderlist',
     loadChildren: () => import('./pages/orderlist/orderlist.module').then(m => m.OrderlistPageModule),
-    ...canActivate(redirectUnauthorizedToLogin)
+    //...canActivate(redirectUnauthorizedToLogin)
   },
   {
     path: 'fav',
     loadChildren: () => import('./pages/fav/fav.module').then(m => m.FavPageModule),
-    ...canActivate(redirectUnauthorizedToLogin)
+    //...canActivate(redirectUnauthorizedToLogin)
+  },
+  {
+    path: 'tambahproduk',
+    loadChildren: () => import('./pages/tambahproduk/tambahproduk.module').then(m => m.TambahprodukPageModule),
+    //...canActivate(redirectUnauthorizedToLogin)
+  },
+  {
+    path: 'faq',
+    loadChildren: () => import('./pages/faq/faq.module').then(m => m.FaqPageModule)
   },
 ];
 

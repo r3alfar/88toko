@@ -31,15 +31,25 @@ export class OrderlistPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.profileServ.getProfile(this.authService.getuid().toString()).valueChanges()
-      .subscribe(data => {
-        this.profile = data;
-        // console.log(this.profile);
-        if (this.profile.isadmin === "admin") this.loadOrderForAdmin();
-        else this.loadOrderList();
-      });
+    this.loadUser();
+  }
 
-
+  loadUser() {
+    this.authServ.userDetails().subscribe(res => {
+      if (res === null) {
+        this.profile = undefined;
+        this.orderList = undefined;
+      }
+      else {
+        this.profileServ.getProfile(this.authService.getuid().toString()).valueChanges()
+          .subscribe(data => {
+            this.profile = data;
+            // console.log(this.profile);
+            if (this.profile.isadmin === "admin") this.loadOrderForAdmin();
+            else this.loadOrderList();
+          });
+      }
+    });
   }
 
   loadOrderForAdmin() {

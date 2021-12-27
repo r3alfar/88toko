@@ -25,6 +25,11 @@ const routes: Routes = [
           m.CartPageModule),
       },
       {
+        path: 'tambahproduk',
+        loadChildren: () => import('src/app/pages/tambahproduk/tambahproduk.module').then(m =>
+          m.TambahprodukPageModule)
+      },
+      {
         path: 'orderlist',
         loadChildren: () => import('src/app/pages/orderlist/orderlist.module').then(m =>
           m.OrderlistPageModule),
@@ -43,6 +48,10 @@ const routes: Routes = [
   {
     path: 'favorites',
     loadChildren: () => import('src/app/pages/fav/fav.module').then(m => m.FavPageModule)
+  },
+  {
+    path: 'faq',
+    loadChildren: () => import('src/app/pages/faq/faq.module').then(m => m.FaqPageModule)
   }
 ];
 

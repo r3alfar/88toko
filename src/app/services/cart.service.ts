@@ -19,7 +19,6 @@ export class CartService {
   }
 
   addToCart(addedItem: CartItem) {
-
     const items = this.item$.getValue();
     const checkDuplicate = items.find((item) => {
       if (item.key === addedItem.key) return 1;
@@ -34,8 +33,6 @@ export class CartService {
       items[index].qty += 1;
       this.item$.next(items);
     }
-
-
   }
 
   removeItem(id: string) {
@@ -49,6 +46,30 @@ export class CartService {
     this.item$.next(items);
     console.log(items);
     // const index = items.findIndex
+  }
+
+  getQty(id?: string) {
+    if (this.item$) {
+      const items = this.item$.getValue();
+      const index = items.findIndex(item => item.key === id);
+      return items[index].qty;
+    }
+    else {
+      const defaultqty = 1;
+      return defaultqty;
+    }
+  }
+
+  getTotalQty() {
+    if (this.item$) {
+      const items = this.item$.getValue();
+      var totalqty = 0;
+      for (let item of items) {
+        totalqty += item.qty;
+      }
+      return totalqty;
+    }
+    else return 0;
   }
 
   getTotalAmount() {
@@ -87,7 +108,7 @@ export class CartService {
     return ObjConverted;
   }
 
-  addOrder(uid: string) {
+  addOrder(uid: string, opsiBayar: string) {
     // console.log(this.Totall);
 
     const orderDetails = {
@@ -96,7 +117,8 @@ export class CartService {
       isCompleted: false,
       totalPrice: this.Totall,
       timeOrdered: Date.now(),
-      productsOrdered: this.convertValuetoObj()
+      productsOrdered: this.convertValuetoObj(),
+      opsibayar: opsiBayar
     };
 
     console.log(orderDetails);

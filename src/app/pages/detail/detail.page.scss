@@ -93,6 +93,12 @@ ion-content {
   margin-top: 1rem;
 }
 
+
+
+.counterItem {
+  display: flex;
+}
+
 ion-footer {
   ion-row {
     padding: 0;
@@ -107,6 +113,34 @@ ion-footer {
         box-shadow: none;
       }
     }
+
+    .butDecrease {
+      color: #F24E1E;
+      display: flex;
+      justify-content: center;
+    }
+
+    .countQty {
+      background-color: #fbfbfb;
+      display: flex;
+      justify-content: center;
+
+      .counter {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: #6b45bc;
+      }
+    }
+
+    .butIncrease {
+      color: #F24E1E;
+      display: flex;
+      justify-content: center;
+    }
+
   }
 }
 

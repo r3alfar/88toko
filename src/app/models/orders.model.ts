@@ -8,6 +8,7 @@ export interface Orderan {
     isCompleted: boolean;
     productsOrdered: ProductsOrdered[];
     orderLength?: number;
+    opsibayar?: string;
 }
 
 export interface ProductsOrdered {

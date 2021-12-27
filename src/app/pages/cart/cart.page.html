@@ -1,8 +1,8 @@
-<ion-header>
+<!-- <ion-header>
   <ion-toolbar>
     <ion-title>cart</ion-title>
   </ion-toolbar>
-</ion-header>
+</ion-header> -->
 
 <ion-content>
   <h3 class="cartTitle">{{(cartItem$|async).length}} Item dalam Keranjang</h3>
@@ -11,7 +11,7 @@
   <ion-list lines="none">
     <ion-item-sliding *ngFor="let item of cartItem$|async">
       <ion-item>
-        <app-cart-item [item]="item" (increase)="onIncrease(item)" (decrease)="onDecrease(item)"></app-cart-item>
+        <app-cart-item style="--background: #c7c7c7" [item]="item" (increase)="onIncrease(item)" (decrease)="onDecrease(item)"></app-cart-item>
       </ion-item>
       <ion-item-options side="end">
         <ion-item-option (click)="removeFromCart(item)">
@@ -28,6 +28,22 @@
   </div>
 
   <!-- CHECKOUT BUTTON -->
+  <div class="caraHapus" *ngIf="(cartItem$|async)">
+    <p>*Geser ke kiri untuk menghapus produk</p>
+  </div>
+
+  <div class="opsiBayar ion-no-margin"  *ngIf="(cartItem$|async)">
+    <ion-item>
+      <ion-label>Metode Pembayaran</ion-label>
+      <ion-select placeholder="Pilih" (ionChange)="getPaymentOption($event)">
+        <ion-select-option value="COD">COD</ion-select-option>
+        <ion-select-option value="OVO">OVO</ion-select-option>
+        <ion-select-option value="GoPay">GoPay</ion-select-option>
+        <ion-select-option value="ShopeePay">ShopeePay</ion-select-option>
+      </ion-select>
+    </ion-item>
+  </div>
+
   <app-custom-button *ngIf="(cartItem$|async).length" (click)="submitOrder()">
     Total: <span><sup>Rp.</sup>{{totalAmount$|async|number: '1.0'}}</span>
   </app-custom-button>

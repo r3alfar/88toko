@@ -1,4 +1,15 @@
-<ion-content *ngIf="profile">
+<ion-content>
+
+  <!-- HEADER NO LOGIN -->
+  <div class="header" *ngIf="!profile">
+    <div class="header-title" >
+      <h6>Welcome</h6>
+      <h2>Guest</h2>
+    </div>
+    <div class="avatar">
+      <ion-img src="assets/images/user.svg"></ion-img>
+    </div>
+  </div>
   <!-- HEADER -->
   <div class="header" *ngIf="profile">
     <div class="header-title" >
@@ -18,14 +29,16 @@
     </ion-col>
     <ion-col size="3">
       <ion-buttons class="ion-no-margin">
-        <ion-button fill="clear" [routerLink]="['/tabs/favorites']">
+        <ion-button fill="clear" *ngIf="!profile" [routerLink]="['/a-signin']">
           <ion-icon name="heart" slot="icon-only" color="danger"></ion-icon>
         </ion-button>
-        <ion-button fill="clear" [routerLink]="['/tabs/favorites']">
-          <ion-icon name="alert-circle" slot="icon-only"></ion-icon>
+        <ion-button fill="clear" *ngIf="profile" [routerLink]="['/tabs/favorites']">
+          <ion-icon name="heart" slot="icon-only" color="danger"></ion-icon>
+        </ion-button>
+        <ion-button fill="clear" [routerLink]="['/tabs/faq']">
+          <ion-icon name="alert-circle" slot="icon-only" color="secondary"></ion-icon>
         </ion-button>
       </ion-buttons>
-     
     </ion-col>
     
 
@@ -57,18 +70,50 @@
   </div> -->
 
   <!-- PRODUCTS -->
+  <!-- <ion-grid>
+    <ion-row>
+      <ion-col col-2 *ngFor="let produk of products">
+        <ion-card>
+          <ion-row>
+            <img [src]="produk.thumb">
+          </ion-row>
+          <ion-card-content>
+            <ion-label>
+              <p>Rp.{{produk.harga|number:'1.0'}}</p>
+              <ion-icon name="heart-outline" slot="icon-only"></ion-icon>
+            </ion-label>
+            <h2>{{produk.nama}}</h2>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid> -->
+
+  <!-- <ion-card *ngFor="let produk of products">
+    <img [src]="produk.thumb">
+    <ion-card-content>
+      <ion-label>
+        <p>Rp.{{produk.harga|number:'1.0'}}</p>
+        <ion-icon name="heart-outline" slot="icon-only"></ion-icon>
+      </ion-label>
+      <h2>{{produk.nama}}</h2>
+    </ion-card-content>
+  </ion-card> -->
+
   <!-- <h2 class="list-header">All Item</h2> -->
   <div class="product-list" >
-    <!-- <app-product-card *ngFor="let produk of products" [item]="produk" (clicked)="openDetailWithState(produk.key)"></app-product-card> -->
-    <!-- <app-product-card *ngFor="let produk of products" [item]="produk" [routerLink]="['/','tabs','detail', produk.key]"></app-product-card> -->
-
-    <div class="card" *ngFor="let produk of products" [routerLink]="['/','tabs','detail', produk.key]">
-      <ion-img [src]="produk.thumb"></ion-img>
-    
-      <div class="card-content">
+    <div class="card" *ngFor="let produk of products" >
+      <ion-img [src]="produk.thumb" [routerLink]="['/','tabs','detail', produk.key]"></ion-img> 
+      <div class="card-content" [routerLink]="['/','tabs','detail', produk.key]">
         <h3 class="title">{{produk.nama}}</h3>
         <h2 class="subtitle"><sup>Rp.</sup>{{produk.harga | number:'1.0'}}</h2>
-        <ion-buttons>
+        <ion-buttons *ngIf="!profile">
+          <ion-button >
+            <ion-icon name="heart-outline" slot="icon-only"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+
+        <ion-buttons *ngIf="profile">
           <ion-button [routerLink]="null" *ngIf="!isFavOrUnfav(profile.favorites, produk.key)" (click)="favItem(produk.key)">
             <ion-icon name="heart-outline" slot="icon-only"></ion-icon>
           </ion-button>
@@ -76,11 +121,8 @@
             <ion-icon name="heart" slot="icon-only"></ion-icon>
           </ion-button>
         </ion-buttons>
-    
       </div>
     </div>
-
-
   </div>
 
   

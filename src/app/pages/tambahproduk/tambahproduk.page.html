@@ -1,0 +1,119 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Tambah Produk</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid fixed>
+    <ion-row>
+      <ion-col size="12" size-sm="8" offset-sm="2">
+        <!-- FORM STYLE -->
+        <form style="margin-top: -50px;
+                    padding: 60px;"
+              #form="ngForm" (ngSubmit)="onSubmit(form)">
+              <!-- (ngSubmit)="onSubmit(form)" -->
+
+          <ion-text style="margin-bottom: 10px;"><h2><b>Tambah Barang</b></h2></ion-text>
+          <ion-text style="color: #9d9fa6; font-size: 12px;"><p>menambah produk untuk dijual.</p></ion-text>
+
+          <!-- NAMA PRODUK -->
+          <ion-item>
+            <ion-label position="floating" color="medium">Nama Produk*</ion-label>
+            <ion-input type="text" ngModel name="nampro" required minlength="4" #namproCtrl="ngModel"></ion-input>
+          </ion-item>
+          <ion-item *ngIf="!namproCtrl.valid && namproCtrl.touched">
+            <ion-icon color="danger" name="alert-circle-outline"></ion-icon>
+            <ion-label color="danger" style="font-size: small">Nama Produk minimal 4 karakter.</ion-label>
+          </ion-item>
+          <!--  -->
+
+          <!-- MERK PRODUK -->
+          <ion-item>
+            <ion-label position="floating" color="medium">Merk*</ion-label>
+            <ion-input type="text" ngModel name="merkpro" required minlength="2" #merkproCtrl="ngModel"></ion-input>
+          </ion-item>
+          <ion-item *ngIf="!merkproCtrl.valid && merkproCtrl.touched">
+            <ion-icon color="danger" name="alert-circle-outline"></ion-icon>
+            <ion-label color="danger" style="font-size: small">Nama Produk minimal 2 karakter.</ion-label>
+          </ion-item>
+          <!--  -->
+
+          <!-- HARGA PRODUK -->
+          <ion-item>
+            <ion-label position="floating" color="medium">Harga*</ion-label>
+            <ion-input type="number" name="hargapro" required ngModel #hargaproCtrl="ngModel" placeholder="contoh: 10000"></ion-input>
+          </ion-item>
+          <ion-item *ngIf="!hargaproCtrl.valid && hargaproCtrl.touched">
+            <ion-icon color="danger" name="alert-circle-outline"></ion-icon>
+            <ion-label color="danger" style="font-size: small">Harga wajib diisi tanpa simbol.</ion-label>
+          </ion-item>
+          <!--  -->
+
+          <!-- KATEGORI PRODUK -->
+          <ion-item>
+            <ion-label position="floating" color="medium">Kategori Produk*</ion-label>
+            <ion-select interface="popover" name="mainCategory" required (ionChange)="setSubCategory(maincat)" [(ngModel)]="maincat">
+              <ion-select-option [value]="maincat" *ngFor="let maincat of mainCategories">{{maincat.name}}</ion-select-option>
+
+            </ion-select>
+          </ion-item>
+          <!--  -->
+
+          <!-- SUBKATEGORI PRODUK -->
+          <ion-item>
+            <ion-label position="floating" color="medium">Sub-kategori Produk*</ion-label>
+            <ion-select interface="popover" required name="subCategory">
+                <ion-select-option *ngFor="let subcat of selectedSubCat">{{subcat.name}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+          <!--  -->
+
+          <!-- UKURAN PRODUK -->
+          <ion-item>
+            <ion-label position="floating" color="medium">Ukuran*</ion-label>
+            <ion-input type="text" name="ukuran" required ngModel #ukuranCtrl="ngModel" placeholder="contoh: 10gram"></ion-input>
+          </ion-item>
+          <ion-item *ngIf="!ukuranCtrl.valid && ukuranCtrl.touched">
+            <ion-icon color="danger" name="alert-circle-outline"></ion-icon>
+            <ion-label color="danger" style="font-size: small">Ukuran wajib diisi.</ion-label>
+          </ion-item>
+          <!--  -->
+
+          <!-- DESKRIPSI PRODUK -->
+          <ion-item>
+            <ion-label position="floating" color="medium">Deskripsi*</ion-label>
+            <ion-textarea name="deskpro" required minlength="25" ngModel #deskproCtrl="ngModel" placeholder="ceritakan produk anda.."></ion-textarea>
+          </ion-item>
+          <ion-item *ngIf="!deskproCtrl.valid && deskproCtrl.touched">
+            <ion-icon color="danger" name="alert-circle-outline"></ion-icon>
+            <ion-label color="danger" style="font-size: small">Minimal 25 karakter.</ion-label>
+          </ion-item>
+          <!--  -->
+        
+          <!-- FOTO URL -->
+          <ion-item>
+            <ion-label position="floating" color="medium">Foto URL*</ion-label>
+            <ion-input type="text" name="fotpro1" required minlength="20" ngModel #fotproCtrl="ngModel" placeholder="contoh: www.linkfoto.com/produk.jpg"></ion-input>
+          </ion-item>
+          <ion-item *ngIf="!fotproCtrl.valid && fotproCtrl.touched">
+            <ion-icon color="danger" name="alert-circle-outline"></ion-icon>
+            <ion-label color="danger" style="font-size: small">Wajib diisi min.20 karakter.</ion-label>
+          </ion-item>
+          <!--  -->
+
+          <!-- FOTO URL KEDUA -->
+          <ion-item *ngIf="fotproCtrl.valid">
+            <ion-label position="floating" color="medium">FotoURL-2</ion-label>
+            <ion-input type="text" name="fotpro2" minlength="20" ngModel #fotpro2Ctrl="ngModel" placeholder="(opsional)"></ion-input>
+          </ion-item>
+          <!--  -->
+
+          <!-- SUBMIT CONTROLLER -->
+          <ion-button style="margin-top: 50px;" type="submit" color="success" expand="block" [disabled]="!form.valid">Tambah Barang</ion-button>
+          
+        </form>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
