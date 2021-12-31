@@ -103,7 +103,7 @@
   <!-- <h2 class="list-header">All Item</h2> -->
   <div class="product-list" >
     <div class="card" *ngFor="let produk of products" >
-      <ion-img [src]="produk.thumb" [routerLink]="['/','tabs','detail', produk.key]"></ion-img> 
+      <ion-img [src]="produk.thumb[0]" [routerLink]="['/','tabs','detail', produk.key]"></ion-img> 
       <div class="card-content" [routerLink]="['/','tabs','detail', produk.key]">
         <h3 class="title">{{produk.nama}}</h3>
         <h2 class="subtitle"><sup>Rp.</sup>{{produk.harga | number:'1.0'}}</h2>

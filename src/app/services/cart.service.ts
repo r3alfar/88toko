@@ -52,12 +52,28 @@ export class CartService {
     if (this.item$) {
       const items = this.item$.getValue();
       const index = items.findIndex(item => item.key === id);
-      return items[index].qty;
+
+      if (index === -1) {
+        const defaultqty = 0;
+        return defaultqty;
+      }
+      else {
+        console.log(items[index]);
+        return items[index].qty
+      }
+      //return items[index].qty;
+      // if (items[index].qty !== undefined) {
+      //   return items[index].qty
+      // }
+      // else {
+      //   const defaultqty = 0;
+      //   return defaultqty;
+      // }
     }
-    else {
-      const defaultqty = 1;
-      return defaultqty;
-    }
+    // else {
+    //   const defaultqty = 1;
+    //   return defaultqty;
+    // }
   }
 
   getTotalQty() {

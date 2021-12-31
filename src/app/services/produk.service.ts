@@ -15,6 +15,18 @@ export class ProdukService {
     return this.dbsource.object(`products/${key}`);
   }
 
+  getLastProduk(): AngularFireList<Produk> {
+    return this.dbsource.list(`products/`, ref => ref.limitToLast(1));
+  }
+
+  addProduk(newId: string, produk: Produk) {
+    this.dbsource.object(`products/${newId}`).update(produk);
+  }
+
+  editProduk(key: string, produk: Produk) {
+    return this.dbsource.list('products/').update(key, produk);
+  }
+
   getAllProduk(where?: string[]): AngularFireList<Produk> {
     if (where === undefined) {
       return this.dbsource.list(`products/`);

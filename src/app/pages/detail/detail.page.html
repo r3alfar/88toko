@@ -9,6 +9,11 @@
       <!-- <ion-button>
         <ion-icon slot="icon-only" color="dark" name="heart-outline"></ion-icon>
       </ion-button> -->
+      <!-- EIDT BUTTON -->
+      <ion-button *ngIf="profile.isadmin ==='admin'" (click)="openModal(actualKey)">
+        <ion-icon name="create-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+
       <ion-button *ngIf="!isFavOrUnfav(profile.favorites, actualKey)" (click)="favItem(actualKey)">
         <ion-icon name="heart-outline" slot="icon-only"></ion-icon>
       </ion-button>
@@ -16,6 +21,7 @@
         <ion-icon name="heart" slot="icon-only"></ion-icon>
       </ion-button>
     </ion-buttons>
+
   </ion-toolbar>
 </ion-header>
 

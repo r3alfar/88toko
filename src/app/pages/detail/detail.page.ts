@@ -1,6 +1,6 @@
 import { AfterContentChecked, Component, Input, OnInit, Output, ViewChild, EventEmitter } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AlertController, NavController, ToastController } from '@ionic/angular';
+import { AlertController, ModalController, NavController, ToastController } from '@ionic/angular';
 import { map } from 'rxjs/operators';
 import { CartItem } from 'src/app/models/cart.model';
 import { Category } from 'src/app/models/category.model';
@@ -25,6 +25,7 @@ var stemmer = new sastrawi.Stemmer();
 var tokenizer = new sastrawi.Tokenizer();
 import * as sw from 'stopword';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { EdititemModalComponent } from 'src/app/components/edititem-modal/edititem-modal.component';
 //natural
 //const tfidff = require('natural/lib/natural/tfidf');
 // import * as natural from 'natural';
@@ -69,6 +70,7 @@ export class DetailPage implements OnInit, AfterContentChecked {
 
   isAddProduct: boolean;
   jumlahQty: number;
+  // newJumlahQty: number;
   newJumlahQty: number;
   itemInCart: number;
   selectedItemQty$: Observable<any>;
@@ -89,7 +91,8 @@ export class DetailPage implements OnInit, AfterContentChecked {
     private rekomendasiServ: RekomendasiService,
     private cartService: CartService,
     private authServ: AuthService,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    private modalCtrl: ModalController
   ) {
     //this.produkKey = this.activatedRoute.snapshot.paramMap.get('produk.key');
     //Extras State this
@@ -112,10 +115,11 @@ export class DetailPage implements OnInit, AfterContentChecked {
 
   ngOnInit() {
     this.loaduser();
+
     //this.jumlahQty = 1;
-    this.newJumlahQty = 1;
+    //this.newJumlahQty = 1;
     //this.newJumlahQty = this.cartService.getQty();
-    this.itemInCart = this.cartService.getTotalQty();
+    //this.itemInCart = this.cartService.getTotalQty();
     // this.cartItem$ = this.cartService.getCart();
 
     this.activatedRoute.paramMap.subscribe(paramMap => {
@@ -125,7 +129,7 @@ export class DetailPage implements OnInit, AfterContentChecked {
         return;
       }
       this.actualKey = paramMap.get('key');
-      console.log(this.actualKey);
+      //console.log(this.actualKey);
     });
 
     //const actualKey = this.produkKey.toString();
@@ -142,7 +146,23 @@ export class DetailPage implements OnInit, AfterContentChecked {
       this.catList = data;
     });
 
+  }
 
+  ionViewDidEnter() {
+    this.itemInCart = this.cartService.getTotalQty();
+    this.newJumlahQty = this.cartService.getQty(this.actualKey);
+    if (this.newJumlahQty > 1) this.isAddProduct = true;
+    else this.isAddProduct = false;
+    //console.log("iviewdidenter: " + this.newJumlahQty)
+  }
+
+  loadItemQty(id?: string) {
+    return new Promise<void>((resolve) => {
+      if (this.actualKey) {
+        this.newJumlahQty = this.cartService.getQty(this.actualKey);
+      }
+      resolve();
+    });
   }
 
   findCategory(catId: string) {
@@ -175,7 +195,7 @@ export class DetailPage implements OnInit, AfterContentChecked {
           .subscribe(data => {
             this.profile = data;
             this.userID = this.profile.key;
-            // console.log(this.profile);
+            // console.log(this.profile.isadmin);
           });
       }
       this.isAddProduct = false;
@@ -246,6 +266,7 @@ export class DetailPage implements OnInit, AfterContentChecked {
       qty: 1
     };
     this.cartService.addToCart(cartItem);
+    this.newJumlahQty = 1;
     this.itemInCart = this.cartService.getTotalQty();
     this.isAddProduct = true;
   }
@@ -339,6 +360,15 @@ export class DetailPage implements OnInit, AfterContentChecked {
     });
 
     toast.present();
+  }
+
+  async openModal(actualKey) {
+    const modal = await this.modalCtrl.create({
+      component: EdititemModalComponent,
+      componentProps: { productKey: actualKey }
+    });
+
+    await modal.present();
   }
 
 }

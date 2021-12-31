@@ -1,5 +1,5 @@
 export interface Produk {
-    key: string;
+    key?: string;
     nilairekomendasi?: number;
     nilaiSearchbyKeyword?: number;
     categoryId: string;
@@ -9,7 +9,7 @@ export interface Produk {
     merk: string;
     harga: string;
     satuan: string;
-    stok: string;
+    stok?: string;
     thumb: string;
     desc: string;
 }
