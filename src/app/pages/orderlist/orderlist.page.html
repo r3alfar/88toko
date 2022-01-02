@@ -46,6 +46,9 @@
                 <div *ngIf="orderan.isAccepted && orderan.isCompleted " style="background: #0FA958;" class="custom-filled-text">
                   <p center text-center>Selesai</p>
                 </div>
+                <div *ngIf="!orderan.isAccepted && orderan.isCompleted " style="background: #343434;" class="custom-filled-text">
+                  <p center text-center>Batal</p>
+                </div>
               
               </ion-col>
             </ion-row>

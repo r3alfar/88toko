@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ModalController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
 import { map } from 'rxjs/operators';
 import { Produk } from 'src/app/models/produk.model';
 import { Profile } from 'src/app/models/profile.model';
@@ -28,7 +28,8 @@ export class OrderModalComponent implements OnInit {
     private produkService: ProdukService,
     private profileServ: ProfilService,
     private authServ: AuthService,
-    private router: Router
+    private router: Router,
+    private alertCtrl: AlertController
   ) { }
 
 
@@ -122,6 +123,53 @@ export class OrderModalComponent implements OnInit {
 
     this.modalCtrl.dismiss();
     this.router.navigateByUrl('/tabs/orderlist');
+  }
+
+  async cancelOrder(isadmin: string, orderKey: string) {
+    await this.cancelAlertRadio(isadmin, orderKey);
+  }
+
+  async cancelAlertRadio(isadmin: string, orderKey: string) {
+    const alert = await this.alertCtrl.create({
+      header: 'Batalkan Pesanan?',
+      subHeader: 'Apakah anda yakin ingin membatalkan pesanan? Pilih alasan anda',
+      inputs: [
+        {
+          name: 'noStock',
+          type: 'radio',
+          label: 'Stok Kosong',
+          value: 'Stok Kosong'
+        },
+        {
+          name: 'noDriver',
+          type: 'radio',
+          label: 'Pengantar tidak ada',
+          value: 'Pengantar tidak ada'
+        },
+        {
+          name: 'noReason',
+          type: 'radio',
+          label: 'Lain-lain',
+          value: 'lain-lain'
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel'
+        },
+        {
+          text: 'Lanjut',
+          handler: (data: string) => {
+            console.log("alert cancel: ", data);
+            if (isadmin === 'admin') this.orderlistServ.updateStatusOrderBatal(orderKey, data);
+            this.modalCtrl.dismiss();
+            this.router.navigateByUrl('/tabs/orderlist');
+          }
+        }
+      ]
+    });
+    await alert.present();
   }
 
 }

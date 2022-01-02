@@ -19,15 +19,18 @@
             <ion-icon style="color: #FA4A44;" *ngIf="!orderModal.isAccepted && !orderModal.isCompleted" class="iconBelanja" name="alert-circle"></ion-icon>
             <ion-icon style="color: #F6DE0F;" *ngIf="orderModal.isAccepted && !orderModal.isCompleted" class="iconBelanja" name="cart"></ion-icon>
             <ion-icon style="color: #0FA958;" *ngIf="orderModal.isAccepted && orderModal.isCompleted" class="iconBelanja" name="bag-check"></ion-icon>
+            <ion-icon style="color: #343434;" *ngIf="!orderModal.isAccepted && orderModal.isCompleted" class="iconBelanja" name="close-circle"></ion-icon>
+            
           </ion-col>
           <ion-col size="6" left text-left>
             <ion-text *ngIf="orderModal.isAccepted && orderModal.isCompleted" class="title-belanja">Selesai</ion-text>
             <ion-text *ngIf="orderModal.isAccepted && !orderModal.isCompleted" class="title-belanja">Sedang Dikirim</ion-text>
+            <ion-text *ngIf="!orderModal.isAccepted && orderModal.isCompleted" class="title-belanja">Batal</ion-text>
             <ion-text *ngIf="!orderModal.isAccepted && !orderModal.isCompleted" class="title-belanja">Pending</ion-text>
             <div class="title-tgl">{{getTanggal(orderModal.timeOrdered)}}, {{getW4ktu(orderModal.timeOrdered)}}</div>
           </ion-col>
           <ion-col size="4" center text-center>
-            <ion-button *ngIf="profile.isadmin === 'admin' && orderModal.isAccepted === false" (click)="prosesOrder(profile.isadmin, orderModal.key)">
+            <ion-button *ngIf="profile.isadmin === 'admin' && orderModal.isAccepted === false && orderModal.isCompleted === false" (click)="prosesOrder(profile.isadmin, orderModal.key)">
               proses
             </ion-button>
             <ion-button *ngIf="profile.isadmin === 'admin' && orderModal.isAccepted === true && orderModal.isCompleted === false" (click)="prosesOrder(profile.isadmin, orderModal.key)">
@@ -40,8 +43,10 @@
           <div class="pembeliInfo">
           <ion-text>Pembeli   : <b>{{pembeliNama}}</b></ion-text> <br>
           <ion-text>Dikirim Ke: <b>{{pembeliAlamat}}</b></ion-text> <br>
-          <ion-text *ngIf="orderModal.opsibayar">Metode Pembayaran: <b>{{orderModal.opsibayar}}</b></ion-text>
+          <ion-text *ngIf="orderModal.opsibayar">Metode Pembayaran: <b>{{orderModal.opsibayar}}</b></ion-text> <br>
+          <ion-text *ngIf="orderModal.alasanBatal">Sebab batal: <b>{{orderModal.alasanBatal}}</b></ion-text>
           </div>
+
         </ion-item>
 
         <ion-item lines="none" *ngFor="let items of orderModal.productsOrdered | keyvalue">
@@ -73,6 +78,9 @@
     
   </ion-card>
 
+  <ion-button class="butCancel" color="dark" *ngIf="profile.isadmin === 'admin' && orderModal.isAccepted === false && orderModal.isCompleted === false" (click)="cancelOrder(profile.isadmin, orderModal.key)">
+    Cancel
+  </ion-button>
 
 </ion-content>
 

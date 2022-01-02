@@ -33,5 +33,9 @@ export class OrderlistService {
     return this.dbsource.object(`orders/${orderKey}`).update({ isCompleted: true });
   }
 
+  updateStatusOrderBatal(orderKey: string, alasan: string) {
+    return this.dbsource.object(`orders/${orderKey}`).update({ isCompleted: true, alasanBatal: alasan });
+  }
+
 
 }

@@ -62,6 +62,14 @@
   display: block;
 }
 
+.butCancel {
+  //margin-left: 3rem;
+  display: flex;
+  justify-content: center;
+  margin-right: 100px;
+  margin-left: 100px;
+}
+
 ion-content {
   --background: #fbf9f8;
 }

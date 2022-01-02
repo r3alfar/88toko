@@ -9,6 +9,7 @@ export interface Orderan {
     productsOrdered: ProductsOrdered[];
     orderLength?: number;
     opsibayar?: string;
+    alasanBatal?: string;
 }
 
 export interface ProductsOrdered {
