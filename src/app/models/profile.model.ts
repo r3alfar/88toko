@@ -7,6 +7,7 @@ export interface Profile {
     alamat: string;
     isadmin: string;
     favorites: FavoriteItem[];
+    noTelp?: string;
 }
 
 export interface FavoriteItem {

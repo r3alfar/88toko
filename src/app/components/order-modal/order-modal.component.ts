@@ -21,6 +21,7 @@ export class OrderModalComponent implements OnInit {
   profiletemp: Profile;
   pembeliAlamat: string;
   pembeliNama: string;
+  pembeliNotelp: string;
 
   constructor(
     private modalCtrl: ModalController,
@@ -63,6 +64,7 @@ export class OrderModalComponent implements OnInit {
       .subscribe(data => {
         this.pembeliNama = data.name;
         this.pembeliAlamat = data.alamat;
+        this.pembeliNotelp = data.noTelp;
       });
   }
 
@@ -121,6 +123,13 @@ export class OrderModalComponent implements OnInit {
     if (isadmin === 'admin') await this.orderlistServ.updateStatusOrderAdmin(orderKey);
     else await this.orderlistServ.updateStatusOrderSelesai(orderKey);
 
+    this.openWA();
+    this.modalCtrl.dismiss();
+    this.router.navigateByUrl('/tabs/orderlist');
+  }
+
+  async selesaiOrder(isadmin: string, orderKey: string) {
+    if (isadmin === 'admin') await this.orderlistServ.updateStatusOrderSelesai(orderKey);
     this.modalCtrl.dismiss();
     this.router.navigateByUrl('/tabs/orderlist');
   }
@@ -163,6 +172,7 @@ export class OrderModalComponent implements OnInit {
           handler: (data: string) => {
             console.log("alert cancel: ", data);
             if (isadmin === 'admin') this.orderlistServ.updateStatusOrderBatal(orderKey, data);
+            this.openWABatal(data);
             this.modalCtrl.dismiss();
             this.router.navigateByUrl('/tabs/orderlist');
           }
@@ -170,6 +180,50 @@ export class OrderModalComponent implements OnInit {
       ]
     });
     await alert.present();
+  }
+
+  async openWA() {
+    const countrycode = "62";
+    const waPembeli = parseInt(this.pembeliNotelp);
+    const text = "Terima kasih sudah memesan lewat deltoomart, kami akan segera memproses pesanan anda!";
+    const urlWA = "https://wa.me/" + countrycode + waPembeli + "?text=" + text;
+
+    const alert = await this.alertCtrl.create({
+      header: 'Perhatian',
+      message: 'Anda akan diarahkan ke Whatsapp Messenger untuk konfirmasi order ke pembelil!',
+      buttons: [
+        {
+          text: 'ok',
+          handler: () => {
+            console.log(urlWA);
+            window.open(encodeURI(urlWA));
+          }
+        }
+      ]
+    });
+    alert.present();
+  }
+
+  async openWABatal(alasan: string) {
+    const countrycode = "62";
+    const waPembeli = parseInt(this.pembeliNotelp);
+    const text = "Mohon maaf pesanan anda kami batalkan karena " + alasan + ". Salam, deltoomart app";
+    const urlWA = "https://wa.me/" + countrycode + waPembeli + "?text=" + text;
+
+    const alert = await this.alertCtrl.create({
+      header: 'Perhatian',
+      message: 'Anda akan diarahkan ke Whatsapp Messenger untuk konfirmasi order ke pembeli!',
+      buttons: [
+        {
+          text: 'ok',
+          handler: () => {
+            console.log(urlWA);
+            window.open(encodeURI(urlWA));
+          }
+        }
+      ]
+    });
+    alert.present();
   }
 
 }

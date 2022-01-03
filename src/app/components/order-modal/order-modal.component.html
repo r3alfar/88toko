@@ -33,7 +33,7 @@
             <ion-button *ngIf="profile.isadmin === 'admin' && orderModal.isAccepted === false && orderModal.isCompleted === false" (click)="prosesOrder(profile.isadmin, orderModal.key)">
               proses
             </ion-button>
-            <ion-button *ngIf="profile.isadmin === 'admin' && orderModal.isAccepted === true && orderModal.isCompleted === false" (click)="prosesOrder(profile.isadmin, orderModal.key)">
+            <ion-button *ngIf="profile.isadmin === 'admin' && orderModal.isAccepted === true && orderModal.isCompleted === false" (click)="selesaiOrder(profile.isadmin, orderModal.key)">
               Selesai
             </ion-button>
           </ion-col>
@@ -43,6 +43,7 @@
           <div class="pembeliInfo">
           <ion-text>Pembeli   : <b>{{pembeliNama}}</b></ion-text> <br>
           <ion-text>Dikirim Ke: <b>{{pembeliAlamat}}</b></ion-text> <br>
+          <ion-text *ngIf="pembeliNotelp">No. WA: <b>{{pembeliNotelp}}</b></ion-text> <br>
           <ion-text *ngIf="orderModal.opsibayar">Metode Pembayaran: <b>{{orderModal.opsibayar}}</b></ion-text> <br>
           <ion-text *ngIf="orderModal.alasanBatal">Sebab batal: <b>{{orderModal.alasanBatal}}</b></ion-text>
           </div>

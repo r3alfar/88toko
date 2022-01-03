@@ -9,6 +9,7 @@ import { timeStamp } from 'console';
 import { Profile } from 'src/app/models/profile.model';
 import { ProfilService } from 'src/app/services/profil.service';
 import { Router } from '@angular/router';
+// import { Browser } from '@capacitor/browser';
 
 @Component({
   selector: 'app-cart',
@@ -126,7 +127,11 @@ export class CartPage implements OnInit {
         },
         {
           text: 'Proses',
-          handler: () => this.cartService.addOrder(this.authServ.getuid(), this.opsiBayar)
+          handler: () => {
+            this.cartService.addOrder(this.authServ.getuid(), this.opsiBayar);
+            this.openWA();
+          }
+          //this.cartService.addOrder(this.authServ.getuid(), this.opsiBayar)
         }
       ]
     });
@@ -145,4 +150,27 @@ export class CartPage implements OnInit {
     });
     alert.present();
   }
+
+  async openWA() {
+    const countrycode = "62";
+    const waPenjual = "82208225051";
+    const text = "Permisi Pak/Bu, Saya telah melakukan order lewat aplikasi. Harap segera Diproses! Metode Pembayaran: " + this.opsiBayar;
+    const urlWA = "https://wa.me/" + countrycode + waPenjual + "?text=" + text;
+
+    const alert = await this.alertCtrl.create({
+      header: 'Perhatian',
+      message: 'Anda akan diarahkan ke Whatsapp Messenger untuk konfirmasi order ke penjual!',
+      buttons: [
+        {
+          text: 'ok',
+          handler: () => {
+            console.log(urlWA);
+            window.open(encodeURI(urlWA));
+          }
+        }
+      ]
+    });
+    alert.present();
+  }
+
 }

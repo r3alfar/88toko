@@ -74,6 +74,10 @@
                 <ion-label position="fixed" >isAdmin?</ion-label>
                 <ion-text>{{ profile.isadmin }}</ion-text>
               </ion-item>
+              <ion-item *ngIf="profile.noTelp">
+                <ion-label position="fixed" >Telp(WA)</ion-label>
+                <ion-text>{{ profile.noTelp }}</ion-text>
+              </ion-item>
             </ion-list>
           </div>
           <!-- Edit Profile -->

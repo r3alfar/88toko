@@ -12,6 +12,8 @@ import { ProfilService } from 'src/app/services/profil.service';
 import { Profile } from 'src/app/models/profile.model';
 import firebase from 'firebase/app';
 import 'firebase/auth';
+// import { ActionPerformed, PushNotifications, PushNotificationSchema, Token } from '@capacitor/push-notifications';
+// import { Platform } from '@ionic/angular';
 
 @Component({
   selector: 'app-home',

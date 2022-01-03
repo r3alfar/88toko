@@ -23,7 +23,7 @@
               #form="ngForm" (ngSubmit)="onSubmit(form)">
 
           <ion-text style="margin-bottom: 10px;"><h2><b>Create Account</b></h2></ion-text>
-          <ion-text style="color: #9d9fa6; font-size: 12px;"><p>Create yout account by filling in into below.</p></ion-text>
+          <ion-text style="color: #9d9fa6; font-size: 12px;"><p>Masukkan informasi anda. Harap diisi dengan teliti!.</p></ion-text>
 
         <!--EMAIL-->
           <ion-item>
@@ -36,6 +36,17 @@
             <ion-label color="danger" style="font-size: small">Should be a valid email address.</ion-label>
           </ion-item>
 
+          <!--NoTELP-->
+          <ion-item>
+            <ion-label position="floating" color="medium">Nomor Telepon (WhatsApp)</ion-label>
+            <ion-input type="tel" ngModel name="notelp" required minlength="12" #notelpCtrl="ngModel" placeholder="cth: 08xx..."></ion-input>
+          </ion-item>
+                <!--Input Properties -->
+          <ion-item *ngIf="!notelpCtrl.valid && notelpCtrl.touched">
+            <ion-icon color="danger" name="alert-circle-outline"></ion-icon>
+            <ion-label color="danger" style="font-size: small">Should be a valid phone number.</ion-label>
+          </ion-item>
+
         <!-- USERNAME -->
           <ion-item>
             <ion-label position="floating" color="medium">Username</ion-label>
@@ -44,7 +55,7 @@
                 <!--Input Properties -->
           <ion-item *ngIf="!userCtrl.valid && userCtrl.touched">
             <ion-icon color="danger" name="alert-circle-outline"></ion-icon>
-            <ion-label color="danger" style="font-size: small">Usernmae length must be four or more.</ion-label>
+            <ion-label color="danger" style="font-size: small">Username length must be four or more.</ion-label>
           </ion-item>
 
         <!-- NAME -->

@@ -22,6 +22,10 @@ export class BSignupPage implements OnInit {
   ngOnInit() {
   }
 
+  clickTest(form: NgForm) {
+    console.log(typeof form.value.notelp);
+  }
+
   async onSubmit(form: NgForm): Promise<void> {
     await this.compService.showLoading();
 
@@ -30,6 +34,7 @@ export class BSignupPage implements OnInit {
     const busername = form.value.username.toString();
     const bname = form.value.name.toString();
     const balamat = form.value.alamat.toString();
+    const bnotelp = form.value.notelp;
 
     //kumpul kedalam satu model
     const profile: any = {
@@ -37,7 +42,8 @@ export class BSignupPage implements OnInit {
       imageUrl: 'https://i.ibb.co/NYR2CH5/image.png',
       name: bname,
       username: busername,
-      alamat: balamat
+      alamat: balamat,
+      noTelp: bnotelp
     };
 
     try {
