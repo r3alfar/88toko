@@ -12,6 +12,8 @@ import { ProfilService } from 'src/app/services/profil.service';
 import { Profile } from 'src/app/models/profile.model';
 import firebase from 'firebase/app';
 import 'firebase/auth';
+import { CartService } from 'src/app/services/cart.service';
+import { CartItem } from 'src/app/models/cart.model';
 // import { ActionPerformed, PushNotifications, PushNotificationSchema, Token } from '@capacitor/push-notifications';
 // import { Platform } from '@ionic/angular';
 
@@ -38,7 +40,8 @@ export class HomePage implements OnInit {
     private productServ: ProdukService,
     private router: Router,
     private rekomendasiServ: RekomendasiService,
-    private profileServ: ProfilService
+    private profileServ: ProfilService,
+    private keranjangServ: CartService
   ) { }
 
   ngOnInit() {
@@ -177,11 +180,27 @@ export class HomePage implements OnInit {
     this.productServ.unsetFavitem(this.authServ.getuid(), prodKey);
   }
 
+  addToCartItem(dataproduk: Produk) {
+    const cartItem: CartItem = {
+      key: dataproduk.key,
+      nama: dataproduk.nama,
+      harga: parseInt(dataproduk.harga),
+      imageThumb: dataproduk.thumb,
+      qty: 1
+    };
+
+    this.keranjangServ.addToCart(cartItem);
+  }
+
   isFavOrUnfav(item: any[], prodId: string) {
     if (item) {
       if (Object.values(item).find(i => i.favitemId === prodId)) return true;
     }
     return false;
+  }
+
+  isAddedToCart(prodId: string) {
+    return this.keranjangServ.checkIfAddedToCart(prodId);
   }
 
   openDetailWithState(key: string) {

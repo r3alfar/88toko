@@ -76,6 +76,18 @@ export class CartService {
     // }
   }
 
+  checkIfAddedToCart(id?: string) {
+    if (this.item$) {
+      const items = this.item$.getValue();
+      const index = items.findIndex(item => item.key === id);
+
+      if (index === -1) {
+        return false;
+      }
+      else return true;
+    }
+  }
+
   getTotalQty() {
     if (this.item$) {
       const items = this.item$.getValue();

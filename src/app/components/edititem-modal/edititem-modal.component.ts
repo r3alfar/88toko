@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { AlertController, ModalController } from '@ionic/angular';
+import { Router } from '@angular/router';
+import { AlertController, ModalController, ToastController } from '@ionic/angular';
 import { map } from 'rxjs/operators';
 import { Category } from 'src/app/models/category.model';
 import { Produk } from 'src/app/models/produk.model';
@@ -32,7 +33,9 @@ export class EdititemModalComponent implements OnInit {
     private modalCtrl: ModalController,
     private catServ: CategoryService,
     private productServ: ProdukService,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    private router: Router,
+    private toastCtrl: ToastController
   ) { }
 
   ngOnInit() {
@@ -73,6 +76,31 @@ export class EdititemModalComponent implements OnInit {
         return cat.key === catId;
       })
     };
+  }
+
+  async hapusItem(prodId: string) {
+    const alert = await this.alertCtrl.create({
+      header: 'Perhatian',
+      message: 'Anda Yakin ingin menghapus produk ini?',
+      buttons: [
+        {
+          text: 'Batal'
+        },
+        {
+          text: 'Ya',
+          handler: () => {
+            this.productServ.deleteProduk(prodId);
+            this.presentToastDeleted();
+            this.modalCtrl.dismiss();
+            this.router.navigateByUrl('/tabs/home');
+          }
+        }
+      ]
+    });
+
+    alert.present();
+
+
   }
 
   compareWithFn(o1, o2) {
@@ -129,5 +157,16 @@ export class EdititemModalComponent implements OnInit {
   dismissModal() {
     this.modalCtrl.dismiss();
   }
+
+  async presentToastDeleted() {
+    const toast = await this.toastCtrl.create({
+      message: 'Product deleted',
+      duration: 1000,
+      position: 'top',
+      color: 'danger'
+    });
+    toast.present();
+  }
+
 
 }

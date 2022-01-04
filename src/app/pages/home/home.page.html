@@ -109,18 +109,28 @@
         <h2 class="subtitle"><sup>Rp.</sup>{{produk.harga | number:'1.0'}}</h2>
         <ion-buttons *ngIf="!profile">
           <ion-button >
-            <ion-icon name="heart-outline" slot="icon-only"></ion-icon>
+            <ion-icon name="cart-outline" slot="icon-only"></ion-icon>
           </ion-button>
         </ion-buttons>
 
+        <!-- coba add to cart homepage -->
         <ion-buttons *ngIf="profile">
+          <ion-button [routerLink]="null" *ngIf="!isAddedToCart(produk.key)" (click)="addToCartItem(produk)">
+            <ion-icon name="cart-outline" slot="icon-only"></ion-icon>
+          </ion-button>
+          <ion-button [routerLink]="null" *ngIf="isAddedToCart(produk.key)" >
+            <ion-icon name="cart" slot="icon-only"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+
+        <!-- <ion-buttons *ngIf="profile">
           <ion-button [routerLink]="null" *ngIf="!isFavOrUnfav(profile.favorites, produk.key)" (click)="favItem(produk.key)">
             <ion-icon name="heart-outline" slot="icon-only"></ion-icon>
           </ion-button>
           <ion-button [routerLink]="null" *ngIf="isFavOrUnfav(profile.favorites, produk.key)" (click)="unfavItem(produk.key)">
             <ion-icon name="heart" slot="icon-only"></ion-icon>
           </ion-button>
-        </ion-buttons>
+        </ion-buttons> -->
       </div>
     </div>
   </div>

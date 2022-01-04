@@ -151,7 +151,7 @@ export class DetailPage implements OnInit, AfterContentChecked {
   ionViewDidEnter() {
     this.itemInCart = this.cartService.getTotalQty();
     this.newJumlahQty = this.cartService.getQty(this.actualKey);
-    if (this.newJumlahQty > 1) this.isAddProduct = true;
+    if (this.newJumlahQty >= 1) this.isAddProduct = true;
     else this.isAddProduct = false;
     //console.log("iviewdidenter: " + this.newJumlahQty)
   }

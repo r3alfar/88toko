@@ -27,6 +27,11 @@ export class ProdukService {
     return this.dbsource.list('products/').update(key, produk);
   }
 
+  deleteProduk(key: string) {
+    this.dbsource.object(`products/` + key).remove();
+  }
+
+
   getAllProduk(where?: string[]): AngularFireList<Produk> {
     if (where === undefined) {
       return this.dbsource.list(`products/`);
