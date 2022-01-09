@@ -67,6 +67,36 @@ export class RekomendasiService {
     return documents;
   }
 
+  // getCorpusOfDocumentSearch(documents: Produk[], query?: string) {
+  //   var corpus = [];
+
+  //   for (var i = 0; i < documents.length; i++) {
+  //     var bow = documents[i].nama;
+  //     var docTokenized = tokenizer.tokenize(bow);
+  //     var docStemmed = [];
+  //     for (let docToken of docTokenized) {
+  //       docStemmed.push(stemmer.stem(docToken));
+  //     }
+  //     var docStopword = sw.removeStopwords(docStemmed, sw.id);
+  //     corpus.push(docStopword.sort());
+
+  //   }
+
+  //   if (query) {
+  //     const keyTokenized = tokenizer.tokenize(query);
+  //     const keyStemmed = [];
+  //     for (let keyToken of keyTokenized) {
+  //       keyStemmed.push(stemmer.stem(keyToken));
+  //     }
+  //     var keyStopword = sw.removeStopwords(keyStemmed, sw.id);
+  //     //corpus.unshift(keyStopword.sort());
+  //     this.searchQuery = keyStopword;
+  //   }
+  //   this.corpuses = corpus;
+  //   console.log(this.corpuses);
+  //   console.log("keyowrd after processing: ", this.searchQuery);
+  // }
+
   getCorpusOfDocument(documents: Produk[], query?: string) {
     var corpus = [];
 
