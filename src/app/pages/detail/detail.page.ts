@@ -92,7 +92,8 @@ export class DetailPage implements OnInit, AfterContentChecked {
     private cartService: CartService,
     private authServ: AuthService,
     private alertCtrl: AlertController,
-    private modalCtrl: ModalController
+    private modalCtrl: ModalController,
+    private keranjangServ: CartService
   ) {
     //this.produkKey = this.activatedRoute.snapshot.paramMap.get('produk.key');
     //Extras State this
@@ -349,6 +350,22 @@ export class DetailPage implements OnInit, AfterContentChecked {
       if (Object.values(item).find(i => i.favitemId === prodId)) return true;
     }
     return false;
+  }
+
+  addToCartItem(dataproduk: Produk) {
+    const cartItem: CartItem = {
+      key: dataproduk.key,
+      nama: dataproduk.nama,
+      harga: parseInt(dataproduk.harga),
+      imageThumb: dataproduk.thumb,
+      qty: 1
+    };
+
+    this.keranjangServ.addToCart(cartItem);
+  }
+
+  isAddedToCart(prodId: string) {
+    return this.keranjangServ.checkIfAddedToCart(prodId);
   }
 
   async presentToast() {
