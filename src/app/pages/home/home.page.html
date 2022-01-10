@@ -107,14 +107,14 @@
       <div class="card-content" [routerLink]="['/','tabs','detail', produk.key]">
         <h3 class="title">{{produk.nama}}</h3>
         <h2 class="subtitle"><sup>Rp.</sup>{{produk.harga | number:'1.0'}}</h2>
-        <ion-buttons *ngIf="!profile">
+        <!-- <ion-buttons *ngIf="!profile">
           <ion-button >
             <ion-icon name="cart-outline" slot="icon-only"></ion-icon>
           </ion-button>
-        </ion-buttons>
+        </ion-buttons> -->
 
         <!-- coba add to cart homepage -->
-        <ion-buttons *ngIf="profile">
+        <ion-buttons>
           <ion-button [routerLink]="null" *ngIf="!isAddedToCart(produk.key)" (click)="addToCartItem(produk)">
             <ion-icon name="cart-outline" slot="icon-only"></ion-icon>
           </ion-button>
