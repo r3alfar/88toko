@@ -226,4 +226,74 @@ export class OrderModalComponent implements OnInit {
     alert.present();
   }
 
+  async cancelOrderUser(orderKey: string) {
+    await this.cancelAlertRadioUser(orderKey);
+  }
+
+  async cancelAlertRadioUser(orderKey: string) {
+    const alert = await this.alertCtrl.create({
+      header: 'Batalkan Pesanan?',
+      subHeader: 'Apakah anda yakin ingin membatalkan pesanan? Pilih alasan anda',
+      inputs: [
+        {
+          name: 'berubah',
+          type: 'radio',
+          label: 'Berubah Pikiran',
+          value: 'Berubah Pikiran'
+        },
+        {
+          name: 'tambahganti',
+          type: 'radio',
+          label: 'Tambah atau Ganti Produk',
+          value: 'Tambah atau Ganti Produk'
+        },
+        {
+          name: 'noReason',
+          type: 'radio',
+          label: 'Lain-lain',
+          value: 'lain-lain'
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel'
+        },
+        {
+          text: 'Lanjut',
+          handler: (data: string) => {
+            console.log("alert cancel: ", data);
+            this.orderlistServ.updateStatusOrderBatal(orderKey, data);
+            this.openWABatalUser(data);
+            this.modalCtrl.dismiss();
+            this.router.navigateByUrl('/tabs/orderlist');
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
+
+  async openWABatalUser(alasan: string) {
+    const countrycode = "62";
+    const waPenjual = "82208225051";
+    const text = "Mohon maaf pesanan saya batalkan karena " + alasan;
+    const urlWA = "https://wa.me/" + countrycode + waPenjual + "?text=" + text;
+
+    const alert = await this.alertCtrl.create({
+      header: 'Perhatian',
+      message: 'Anda akan diarahkan ke Whatsapp Messenger untuk konfirmasi order ke pembeli!',
+      buttons: [
+        {
+          text: 'ok',
+          handler: () => {
+            console.log(urlWA);
+            window.open(encodeURI(urlWA));
+          }
+        }
+      ]
+    });
+    alert.present();
+  }
+
 }

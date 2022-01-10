@@ -82,6 +82,9 @@
   <ion-button class="butCancel" color="dark" *ngIf="profile.isadmin === 'admin' && orderModal.isAccepted === false && orderModal.isCompleted === false" (click)="cancelOrder(profile.isadmin, orderModal.key)">
     Cancel
   </ion-button>
+  <ion-button class="butCancel" color="dark" *ngIf="!profile.isadmin && orderModal.isAccepted === false && orderModal.isCompleted === false" (click)="cancelOrderUser(orderModal.key)">
+    Cancel
+  </ion-button>
 
 </ion-content>
 
