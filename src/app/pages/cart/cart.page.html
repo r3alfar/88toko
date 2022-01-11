@@ -10,7 +10,8 @@
   <!-- CART ITEMS -->
   <ion-list lines="none">
     <ion-item-sliding *ngFor="let item of cartItem$|async">
-      <ion-item  [routerLink]="['/','tabs','detail', item.key]">
+      <ion-item> 
+        <!-- [routerLink]="['/','tabs','detail', item.key]" -->
         <app-cart-item style="--background: #c7c7c7" [item]="item" (increase)="onIncrease(item)" (decrease)="onDecrease(item)"></app-cart-item>
       </ion-item>
       <ion-item-options side="end">
