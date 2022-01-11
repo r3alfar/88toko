@@ -82,7 +82,7 @@ export class CartPage implements OnInit {
 
     if (this.opsiBayar === 'COD') this.opsiBayarSetting = '<br><br>Menyiapkan tunai saat penjual tiba.';
     else if (this.opsiBayar === 'OVO') this.opsiBayarSetting = '<br><br>Transfer ke <br><b>OVO</b> 0821-1467-9526 <br>a/n Sylvia';
-    else if (this.opsiBayar === 'ShopeePay') this.opsiBayarSetting = '<br><br>Transfer ke <br><b>ShopeePay</b> 0821-1467-9526 <br>a/n Sylvia';
+    else if (this.opsiBayar === 'GoPay') this.opsiBayarSetting = '<br><br>Transfer ke <br><b>GoPay</b> 0821-1467-9526 <br>a/n Sylvia';
     else if (this.opsiBayar === 'ShopeePay') this.opsiBayarSetting = '<br><br>Transfer ke <br><b>ShopeePay</b> 0821-1467-9526 <br>a/n Sylvia';
     console.log(this.opsiBayar + ': ' + this.opsiBayarSetting);
   }
