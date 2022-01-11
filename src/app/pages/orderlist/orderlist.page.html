@@ -28,11 +28,11 @@
               <ion-col class="title-icon" size="2" center text-center>
                 <ion-icon class="iconBelanja" name="cart"></ion-icon>
               </ion-col>
-              <ion-col size="6" left text-left>
+              <ion-col size="5" left text-left>
                 <ion-text class="title-belanja">Belanja</ion-text>
                 <div class="title-tgl">{{getTanggal(orderan.timeOrdered)}}</div>
               </ion-col>
-              <ion-col size="4" center text-center>
+              <ion-col size="5" center text-center>
       
                 <div *ngIf="!orderan.isAccepted && !orderan.isCompleted " style="background: #FA4A44;" class="custom-filled-text">
                   <p center text-center>Pending</p>
